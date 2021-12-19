@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjpowernode.crm.workbench.dao.ContactsCustomerRelationDao">
+    <select id="getCountByCids" resultType="int">
+        select count(*)
+        from tbl_contacts_customer_relation
+        where contactsId in
+        <foreach collection="array" item="cid" open="(" close=")" separator=",">
+            #{cid}
+        </foreach>
+    </select>
+
+    <update id="updateCustomer">
+        update tbl_contacts_customer_relation set customerId=#{customerId}
+        where id = #{id}
+    </update>
+
+    <select id="getByContactsId" resultType="ContactsCustomerRelation">
+        select *
+        from tbl_contacts_customer_relation
+        where contactsId = #{contactsId}
+    </select>
+
+    <insert id="addContacts">
+        insert into tbl_contacts_customer_relation(id, contactsId, customerId)
+        values (#{id}, #{contactsId}, #{customerId})
+    </insert>
+
+    <update id="deleteContacts">
+        update tbl_contacts_customer_relation
+        set customerId=''
+        where contactsId = #{contactsId}
+          and customerId = #{customerId}
+    </update>
+
+	<insert id="save">
+        insert into tbl_contacts_customer_relation(
+            id,
+            contactsId,
+            customerId
+        )values (
+            #{id},
+            #{contactsId},
+            #{customerId}
+        )
+    </insert>
+  	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

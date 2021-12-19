@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjpowernode.crm.workbench.dao.CustomerTranRelationDao">
+    <select id="getCountByCids" resultType="int">
+        select count(*)
+        from tbl_customer_tran_relation
+        where customerId in
+        <foreach collection="array" item="cid" open="(" close=")" separator=",">
+            #{cid}
+        </foreach>
+    </select>
+
+    <update id="updateCustomer">
+        update tbl_customer_tran_relation set customerId=#{customerId}
+        where id = #{id}
+    </update>
+
+    <select id="getByTranId" resultType="CustomerTranRelation">
+        select *
+        from tbl_customer_tran_relation
+        where tranId = #{tranId}
+    </select>
+
+    <delete id="unbundByCids">
+        delete
+        from tbl_customer_tran_relation
+        where customerId in
+        <foreach collection="array" item="cid" open="(" close=")" separator=",">
+            #{cid}
+        </foreach>
+    </delete>
+
+	<insert id="save">
+        insert into tbl_customer_tran_relation(
+            id,
+            customerId,
+            tranId
+        )values (
+            #{id},
+            #{customerId},
+            #{tranId}
+        )
+    </insert>
+  	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

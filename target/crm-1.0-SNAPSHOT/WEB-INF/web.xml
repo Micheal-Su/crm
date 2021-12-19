@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>crm</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+  
+<!--  过滤器-->
+<!--  字符编码过滤器-->
+  <filter>
+    <filter-name>EncodingFilter</filter-name>
+    <filter-class>com.bjpowernode.crm.web.filter.EncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>EncodingFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  <!--  登录过滤器-->
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.bjpowernode.crm.web.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+    <url-pattern>*.jsp  </url-pattern>
+  </filter-mapping>
+
+<!--  监听器-->
+<listener>
+  <listener-class>com.bjpowernode.crm.web.listener.SysInitListener</listener-class>
+</listener>
+
+<!--  用户控制器-->
+  <servlet>
+    <servlet-name>UserController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.settings.web.controller.UserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserController</servlet-name>
+    <url-pattern>/settings/user/login.do</url-pattern>
+  </servlet-mapping>
+
+  <!--  市场活动控制器-->
+  <servlet>
+    <servlet-name>ActivityController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.ActivityController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ActivityController</servlet-name>
+    <url-pattern>/workbench/activity/getUserList.do</url-pattern>
+    <url-pattern>/workbench/activity/save.do</url-pattern>
+    <url-pattern>/workbench/activity/pageList.do</url-pattern>
+    <url-pattern>/workbench/activity/delete.do</url-pattern>
+    <url-pattern>/workbench/activity/getUserListAndActivity.do</url-pattern>
+    <url-pattern>/workbench/activity/update.do</url-pattern>
+    <url-pattern>/workbench/activity/detail.do</url-pattern>
+    <url-pattern>/workbench/activity/getRemarkListByAid.do</url-pattern>
+    <url-pattern>/workbench/activity/deleteRemark.do</url-pattern>
+    <url-pattern>/workbench/activity/saveRemark.do</url-pattern>
+    <url-pattern>/workbench/activity/updateRemark.do</url-pattern>
+  </servlet-mapping>
+
+  <!--  客户控制器-->
+  <servlet>
+    <servlet-name>CustomerController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.CustomerController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CustomerController</servlet-name>
+    <url-pattern>/workbench/customer/getUserList.do</url-pattern>
+    <url-pattern>/workbench/customer/save.do</url-pattern>
+    <url-pattern>/workbench/customer/pageList.do</url-pattern>
+    <url-pattern>/workbench/customer/delete.do</url-pattern>
+    <url-pattern>/workbench/customer/getUserListAndCustomer.do</url-pattern>
+    <url-pattern>/workbench/customer/update.do</url-pattern>
+    <url-pattern>/workbench/customer/detail.do</url-pattern>
+    <url-pattern>/workbench/customer/getRemarkListByCid.do</url-pattern>
+    <url-pattern>/workbench/customer/getContactsListByCid.do</url-pattern>
+    <url-pattern>/workbench/customer/addContacts.do</url-pattern>
+    <url-pattern>/workbench/customer/deleteContacts.do</url-pattern>
+    <url-pattern>/workbench/customer/deleteRemark.do</url-pattern>
+    <url-pattern>/workbench/customer/saveRemark.do</url-pattern>
+    <url-pattern>/workbench/customer/updateRemark.do</url-pattern>
+    <url-pattern>/workbench/customer/bundTran.do</url-pattern>
+    <url-pattern>/workbench/customer/deleteTran.do</url-pattern>
+    <url-pattern>/workbench/customer/getCustomerName.do</url-pattern>
+    <url-pattern>/workbench/customer/getTranListByCustomerId.do</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>ContactsController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.ContactsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ContactsController</servlet-name>
+    <url-pattern>/workbench/contacts/getUserList.do</url-pattern>
+    <url-pattern>/workbench/contacts/getCustomerName.do</url-pattern>
+    <url-pattern>/workbench/contacts/save.do</url-pattern>
+    <url-pattern>/workbench/contacts/pageList.do</url-pattern>
+    <url-pattern>/workbench/contacts/delete.do</url-pattern>
+    <url-pattern>/workbench/contacts/getUserListAndContacts.do</url-pattern>
+    <url-pattern>/workbench/contacts/update.do</url-pattern>
+    <url-pattern>/workbench/contacts/detail.do</url-pattern>
+    <url-pattern>/workbench/contacts/getById.do</url-pattern>
+    <url-pattern>/workbench/contacts/bundTran.do</url-pattern>
+    <url-pattern>/workbench/contacts/deleteTran.do</url-pattern>
+    <url-pattern>/workbench/contacts/bundActivity.do</url-pattern>
+    <url-pattern>/workbench/contacts/unbundActivity.do</url-pattern>
+    <url-pattern>/workbench/contacts/getTranListByContactsId.do</url-pattern>
+    <url-pattern>/workbench/contacts/getActivityListByContactsNameButNotId.do</url-pattern>
+    <url-pattern>/workbench/contacts/getActivityListByContactsId.do</url-pattern>
+  </servlet-mapping>
+
+
+  <!--  线索控制器-->
+  <servlet>
+    <servlet-name>ClueController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.ClueController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ClueController</servlet-name>
+    <url-pattern>/workbench/clue/getUserList.do</url-pattern>
+    <url-pattern>/workbench/clue/save.do</url-pattern>
+    <url-pattern>/workbench/clue/edit.do</url-pattern>
+    <url-pattern>/workbench/clue/update.do</url-pattern>
+    <url-pattern>/workbench/clue/detail.do</url-pattern>
+    <url-pattern>/workbench/clue/getUserListAndClue.do</url-pattern>
+    <url-pattern>/workbench/clue/pageList.do</url-pattern>
+    <url-pattern>/workbench/clue/getActivityListByClueId.do</url-pattern>
+    <url-pattern>/workbench/clue/unbund.do</url-pattern>
+    <url-pattern>/workbench/clue/getActivityListByNameAndNotByClueId.do</url-pattern>
+    <url-pattern>/workbench/clue/bund.do</url-pattern>
+    <url-pattern>/workbench/clue/getActivityListByName.do</url-pattern>
+    <url-pattern>/workbench/clue/convert.do</url-pattern>
+    <url-pattern>/workbench/clue/delete.do</url-pattern>
+    <url-pattern>/workbench/clue/saveRemark.do</url-pattern>
+    <url-pattern>/workbench/clue/deleteRemark.do</url-pattern>
+    <url-pattern>/workbench/clue/updateRemark.do</url-pattern>
+    <url-pattern>/workbench/clue/getRemarkListByCid.do</url-pattern>
+
+  </servlet-mapping>
+
+  <!--  交易控制器-->
+  <servlet>
+    <servlet-name>TranController</servlet-name>
+    <servlet-class>com.bjpowernode.crm.workbench.web.controller.TranController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TranController</servlet-name>
+    <url-pattern>/workbench/transaction/add.do</url-pattern>
+    <url-pattern>/workbench/transaction/pageList.do</url-pattern>
+    <url-pattern>/workbench/transaction/getCustomerName.do</url-pattern>
+    <url-pattern>/workbench/transaction/save.do</url-pattern>
+    <url-pattern>/workbench/transaction/getTranList.do</url-pattern>
+    <url-pattern>/workbench/transaction/detail.do</url-pattern>
+    <url-pattern>/workbench/transaction/getTranHistoryByTranId.do</url-pattern>
+    <url-pattern>/workbench/transaction/getRemarkListByTid.do</url-pattern>
+    <url-pattern>/workbench/transaction/saveRemark.do</url-pattern>
+    <url-pattern>/workbench/transaction/updateRemark.do</url-pattern>
+    <url-pattern>/workbench/transaction/deleteRemark.do</url-pattern>
+    <url-pattern>/workbench/transaction/changeStage.do</url-pattern>
+    <url-pattern>/workbench/transaction/getCharts.do</url-pattern>
+    <url-pattern>/workbench/transaction/getUserListAndTransaction.do</url-pattern>
+    <url-pattern>/workbench/transaction/edit2.do</url-pattern>
+    <url-pattern>/workbench/transaction/update.do</url-pattern>
+    <url-pattern>/workbench/transaction/updateByModal.do</url-pattern>
+    <url-pattern>/workbench/transaction/updateByRedirect.do</url-pattern>
+    <url-pattern>/workbench/transaction/delete.do</url-pattern>
+    <url-pattern>/workbench/transaction/getContactsListByName.do</url-pattern>
+
+
+  </servlet-mapping>
+
+</web-app>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

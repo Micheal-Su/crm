@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjpowernode.crm.settings.dao.DicValueDao">
+<select id="getListByCode" resultType="DicValue">
+    select * from tbl_dic_value where typeCode = #{code} order by orderNo
+</select>
+<!--   当传进来的值不是对象或map时，#{}里的只是形参，可以随意写-->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

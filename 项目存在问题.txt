@@ -1,0 +1,55 @@
+2021/1/15
+
+2021/1/25
+    1.今天在写到P109打开线索添加模块最后时，一切就绪，发现数据字典下拉个数够，但是没有内容  已解决√ （问题是DicValue.xml文件中的resultType错了）
+
+-----------------------------------------------
+2021/10/24
+我发现的问题：
+  1. 选中的复选框在点击到别的页的时候会被取消（这问题很麻烦）
+  2. 前端各种分割线文字位置乱七八糟，没对齐(已自己解决)
+
+
+-----------------------------------------------
+思考与经验：
+1. 整个数据库都不存在的列名，到了什么地步才需要创建VO类？
+目前基本没有创建，但是不知道具体会有什么大影响，不创建VO 也不在实体类添加数据库没有的属性的话
+
+2. 此表没有join的其他表有的属性怎么拿来用
+举个例子，要使用到customerName但是数据库里只有customerId
+
+    2.1
+    通过customerDao.getNameById(customerId),获取name,
+    使用map把name传到Dao层,
+    在Dao层中提取出map中的"customerName",
+    接着 request.setAttribute("customerName",customerName),
+    在前端${customerName},虽然看起来很突兀
+
+    2.2 直接重命名， cus.name as con.customerId,在前端就把customerId当成customerName了
+
+    2.3 更加不好的选择，直接给domain类添加个customerName属性，便可以
+    select
+        cus.name as customerName,
+    from
+        tbl_contacts c
+    join tbl_customer cus
+             on cus.id = c.customerId
+    where c.id=#{id}
+关于在各个地方如何获取possibility
+1.在后台获得(一般在控制器里)
+Map<String, String> pMap = (Map<String, String>) request.getServletContext().getAttribute("pMap");
+pMap.get(stage);
+2.在前端获得
+var json = {
+		<%
+            for (String key:set){
+                String value = pMap.get(key);
+        %>
+		"<%=key%>":<%=value%>,
+		<%
+            }
+        %>
+	};
+	var possibility = json[stage];
+
+

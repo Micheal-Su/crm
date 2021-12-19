@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bjpowernode.crm.workbench.dao.CustomerDao">
+	<select id="getCustomerByName" resultType="Customer">
+        select * from tbl_customer where name = #{name}
+    </select>
+
+    <select id="getById" resultType="Customer">
+        select * from tbl_customer where id = #{id}
+    </select>
+
+   <select id="detail" resultType="Customer">
+    select
+        c.id,
+        c.name,
+        u.name as owner,
+        c.phone,
+        c.website,
+        c.createBy,
+        c.createTime,
+        c.editBy,
+        c.editTime,
+        c.description,
+        c.contactSummary,
+        c.nextContactTime,
+        c.address
+        from tbl_customer c
+        join tbl_user u
+        on c.owner = u.id
+        where c.id = #{id}
+</select>
+
+    <delete id="delete1">
+        delete
+        from tbl_customer
+        where id in
+        <foreach collection="array" item="cid" open="(" close=")" separator=",">
+            #{cid}
+        </foreach>
+    </delete>
+
+    <select id="getTotalByCondition" resultType="Integer">
+        select count(*)
+        from tbl_customer c
+        join tbl_user u
+        on c.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                c.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="phone!=null and phone!=''">
+                and c.phone = #{phone}
+            </if>
+            <if test="website!=null and website!=''">
+                and c.website = #{website}
+            </if>
+        </where>
+    </select>
+
+    <!-- &gt;表示大于号  &lt;表示小于号   -->
+    <select id="getCustomerListByCondition" resultType="Customer">
+
+        select
+
+        c.id,
+        c.name,
+        u.name as owner,
+        c.phone,
+        c.website
+
+        from tbl_customer c
+        join tbl_user u
+        on c.owner=u.id
+        <where>
+            <if test="name!=null and name!=''">
+                c.name like '%' #{name} '%'
+            </if>
+            <if test="owner!=null and owner!=''">
+                and u.name like '%' #{owner} '%'
+            </if>
+            <if test="phone!=null and phone!=''">
+                and c.phone = #{phone}
+            </if>
+            <if test="website!=null and website!=''">
+                and c.website = #{website}
+            </if>
+        </where>
+        order by c.createTime desc
+        limit #{skipCount},#{pageSize}
+    </select>
+
+    <update id="update">
+        update tbl_customer set
+                            name= #{name},
+                            owner= #{owner},
+                            phone= #{phone},
+                            website= #{website},
+                            editBy= #{editBy},
+                            editTime= #{editTime},
+                            description= #{description},
+                            contactSummary= #{contactSummary},
+                            nextContactTime= #{nextContactTime},
+                            address =#{address}
+        where id=#{id}
+
+    </update>
+
+  	<insert id="save" >
+        insert into tbl_customer (
+            id,
+            owner,
+            name,
+            website,
+            phone,
+            createBy,
+            createTime,
+            contactSummary,
+            nextContactTime,
+            description,
+            address
+        )values (
+            #{id},
+            #{owner},
+            #{name},
+            #{website},
+            #{phone},
+            #{createBy},
+            #{createTime},
+            #{contactSummary},
+            #{nextContactTime},
+            #{description},
+            #{address}
+        )
+    </insert>
+
+    <select id="getTranListByCid" resultType="Tran">
+
+        select
+            t.id,
+            t.name,
+            t.money,
+            t.type,
+            t.stage,
+            t.expectedDate
+        from tbl_tran t
+                 join tbl_customer_tran_relation ctr
+                      on t.id = ctr.tranId
+
+        where ctr.customerId = #{customerId}
+    </select>
+
+
+    <select id="getCustomerName" resultType="Customer">
+        select * from tbl_customer where name like '%' #{name} '%'
+    </select>
+
+    <select id="getCustomerNameById" resultType="String">
+        select name from tbl_customer where id = #{id}
+    </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
