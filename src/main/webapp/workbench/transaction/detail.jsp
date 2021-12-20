@@ -803,6 +803,7 @@
 </div>
 
 <!-- 阶段状态 -->
+<%--jsp中用不了El表达式，只能再取request中的数据--%>
 <div style="position: relative; left: 40px; top: -50px;">
     阶段&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <%
