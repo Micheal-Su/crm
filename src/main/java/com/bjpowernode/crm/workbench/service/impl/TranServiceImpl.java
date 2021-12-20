@@ -127,34 +127,52 @@ public class TranServiceImpl implements TranService {
         return flag;
     }
 
-    public boolean update(Tran t, String customerName) {
+    public boolean update(Tran t, String contactsName) {
         tranDao = SqlSessionUtil.getSqlSession().getMapper(TranDao.class);
-        //目前没有customerId ,需要先判断是否存在该客户，自动选择创建或者获取该客户
+//        一般交易中的客户名称是不会改的
         boolean flag = true;
-        Customer cus = customerDao.getCustomerByName(customerName);
-        if (cus==null){
-            cus = new Customer();
-            cus.setId(UUIDUtil.getUUID());
-            cus.setName(customerName);
-            cus.setCreateBy(t.getCreateBy());
-            cus.setCreateTime(t.getCreateTime());
-            cus.setContactSummary(t.getContactSummary());
-            cus.setNextContactTime(t.getNextContactTime());
-            cus.setOwner(t.getOwner());
+
+        Contacts con = contactsDao.getContactsByName(contactsName);
+        ContactsCustomerRelation ccr = new ContactsCustomerRelation();
+        ccr.setCustomerId(t.getCustomerId());
+        ccr.setContactsId(t.getContactsId());
+//        取得原先的ccr对应关系,可能为null 注意了
+        ccr = contactsCustomerRelationDao.getByCusIdAndConId(ccr);
+        if (ccr == null){
+            ccr = new ContactsCustomerRelation();
+            ccr.setCustomerId(t.getCustomerId());
+        }
+        if(con==null){
+            con = new Contacts();
+            con.setId(UUIDUtil.getUUID());
+            con.setFullname(contactsName);
+            con.setCustomerId(t.getCustomerId());
+            con.setCreateBy(t.getCreateBy());
+            con.setCreateTime(t.getCreateTime());
+            con.setContactSummary(t.getContactSummary());
+            con.setNextContactTime(t.getNextContactTime());
+            con.setOwner(t.getOwner());
+            con.setBirth("");
+            con.setSource("");
             //添加客户
-            int count1 = customerDao.save(cus);
-            if (count1!=1){
+            int count2 = contactsDao.save(con);
+            if (count2!=1){
                 flag=false;
             }
         }
-        //客户处理完了
-        //将客户的id添加到t
-        t.setCustomerId(cus.getId());
+
+        ccr.setContactsId(con.getId());//更新ccr中的联系人信息
+
+        t.setContactsId(con.getId());
+
         //添加交易
-        int count2 = tranDao.update(t);
-        if (count2!=1){
+        int count3 = tranDao.update(t);
+        if (count3!=1){
             flag=false;
         }
+
+        contactsCustomerRelationDao.updateContacts(ccr);//更新ccr对应关系
+
         //添加交易历史
         TranHistory th = new TranHistory();
         th.setId(UUIDUtil.getUUID());
@@ -165,15 +183,15 @@ public class TranServiceImpl implements TranService {
         th.setMoney(t.getMoney());
         th.setStage(t.getStage());
 
-        int count3 = tranHistoryDao.save(th);
-        if (count3!=1){
+        int count4 = tranHistoryDao.save(th);
+        if (count4!=1){
             flag=false;
         }
 
         ContactsTranRelation ctr = contactsTranRelationDao.getByTranId(t.getId());
         ctr.setContactsId(t.getContactsId());
-        int flag3 = contactsTranRelationDao.updateContacts(ctr);
-        if(flag3!=1){
+        int flag4 = contactsTranRelationDao.updateContacts(ctr);
+        if(flag4!=1){
             flag=false;
         }
         return flag;
@@ -203,6 +221,8 @@ public class TranServiceImpl implements TranService {
         //交易阶段改变后，生成一条交易历史
         TranHistory th = new TranHistory();
         th.setId(UUIDUtil.getUUID());
+        th.setStage(t.getStage());
+        th.setPossibility(t.getPossibility());
         th.setCreateBy(t.getEditBy());
         th.setCreateTime(DateTimeUtil.getSysTime());
         th.setExpectedDate(t.getExpectedDate());

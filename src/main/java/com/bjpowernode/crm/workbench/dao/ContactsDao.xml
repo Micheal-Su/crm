@@ -45,6 +45,10 @@
         select * from tbl_contacts where id = #{id}
     </select>
 
+    <select id="getContactsByName" resultType="Contacts">
+        select * from tbl_contacts where fullname = #{fullname}
+    </select>
+
     <select id="getContactsListByCid" resultType="Contacts">
 
         select

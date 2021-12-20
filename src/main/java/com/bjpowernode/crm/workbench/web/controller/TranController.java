@@ -172,13 +172,13 @@ public class TranController extends HttpServlet {
         String name = request.getParameter("name");
         String expectedDate = request.getParameter("expectedDate");
 //        客户名称是输入的，下面市场活动和联系人是单选的
-        String customerName = request.getParameter("customerName");
+        String customerId = request.getParameter("customerId");
         String stage = request.getParameter("stage");
         String type = request.getParameter("type");
         String source = request.getParameter("source");
         String activityId = request.getParameter("activityId");
         String contactsId = request.getParameter("contactsId");
-        System.out.println(contactsId + "\n\n\n\n\n");
+        String contactsName = request.getParameter("contactsName");
         String createBy = ((User) request.getSession().getAttribute("user")).getName();
         String createTime = DateTimeUtil.getSysTime();
         String description = request.getParameter("description");
@@ -195,6 +195,7 @@ public class TranController extends HttpServlet {
         t.setType(type);
         t.setSource(source);
         t.setActivityId(activityId);
+        t.setCustomerId(customerId);
         t.setContactsId(contactsId);
         t.setCreateBy(createBy);
         t.setCreateTime(createTime);
@@ -203,7 +204,7 @@ public class TranController extends HttpServlet {
         t.setNextContactTime(nextContactTime);
 
         TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
-        return ts.update(t, customerName);
+        return ts.update(t,contactsName);
 
     }
 
@@ -296,7 +297,10 @@ public class TranController extends HttpServlet {
         String expectedDate = request.getParameter("expectedDate");
         String editTime = DateTimeUtil.getSysTime();
         String editBy = ((User) request.getSession().getAttribute("user")).getName();
+
         Tran t = new Tran();
+        Map<String, String> pMap = (Map<String, String>) request.getServletContext().getAttribute("pMap");
+        t.setPossibility(pMap.get(stage));
         t.setId(id);
         t.setStage(stage);
         t.setMoney(money);
@@ -306,8 +310,6 @@ public class TranController extends HttpServlet {
 
         TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
         boolean flag = ts.changeStage(t);
-        Map<String, String> pMap = (Map<String, String>) request.getServletContext().getAttribute("pMap");
-        t.setPossibility(pMap.get(stage));
 
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("success", flag);

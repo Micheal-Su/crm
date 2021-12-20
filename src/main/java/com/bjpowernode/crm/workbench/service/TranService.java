@@ -11,7 +11,7 @@ import java.util.Map;
 public interface TranService {
     boolean save(Tran t, String customerName, String contactsName);
 
-    boolean update(Tran t, String customerName);
+    boolean update(Tran t, String contactsName);
 
     Tran getTranById(String id);
 

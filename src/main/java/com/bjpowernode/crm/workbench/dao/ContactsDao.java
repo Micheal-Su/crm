@@ -37,4 +37,6 @@ public interface ContactsDao {
     int deleteByCusId(String customerId);
 
     int deleteById(String customerId);
+
+    Contacts getContactsByName(String contactsName);
 }

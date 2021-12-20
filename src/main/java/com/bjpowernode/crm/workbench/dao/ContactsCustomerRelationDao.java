@@ -16,4 +16,8 @@ public interface ContactsCustomerRelationDao {
     int updateCustomer(ContactsCustomerRelation ccr);
 
     String getContactsIdById(String id);
+
+    int updateContacts(ContactsCustomerRelation car);
+
+    ContactsCustomerRelation getByCusIdAndConId(ContactsCustomerRelation ccr);
 }

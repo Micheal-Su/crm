@@ -22,7 +22,7 @@ public class Contacts {
     private String nextContactTime;
     private String address;
 
-    private String contactsId;//Dao类使用
+    private String contactsId;//id在Dao类被占用时使用
 
     public String getContactsId() {
         return contactsId;

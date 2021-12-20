@@ -1,7 +1,7 @@
 2021/10/24
 本项目使用到的知识
 Html Css Js; Ajax Jquery Jsp
-Tomcat Maven Mybatis
+Tomcat-Servlet Maven Mybatis(没涉及spring和springmvc)
 
 
 我发现的问题：
