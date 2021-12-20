@@ -10,7 +10,9 @@
   
   	<package name="com.bjpowernode.crm.settings.domain"/>
   	<package name="com.bjpowernode.crm.workbench.domain"/>
-<!--xml文件中可返回的类型-->
+<!--xml文件中返回的类型的包名，如
+  resultType="Activity" = resultType="com.bjpowernode.crm.settings.domain.Activity"
+-->
   
   </typeAliases>
   
@@ -31,7 +33,7 @@
    
       <package name="com.bjpowernode.crm.settings.dao"/>
       <package name="com.bjpowernode.crm.workbench.dao"/>
-<!--指定哪，哪里就可以用此数据库-->
+<!--xml所在的包名，这个包中所有的xml文件一次性都能加载给mybatis，就可以使用SQL了-->
   </mappers>
 </configuration>
 

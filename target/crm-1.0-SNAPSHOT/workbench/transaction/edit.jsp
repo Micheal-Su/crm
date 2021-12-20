@@ -80,10 +80,7 @@
                     alert("名称不能为空");
                     return false;
                 }
-                if($("#edit-customerName").val() == ""){
-                    alert("客户名称不能为空");
-                    return false;
-                }
+
                 if($("#edit-contactsName").val() == ""){
                     alert("联系人名称不能为空");
                     return false;
@@ -268,6 +265,9 @@
 <form id="editForm" action="workbench/transaction/updateByRedirect.do" class="form-horizontal" role="form"
       style="position: relative; top: -30px;">
     <div class="form-group">
+
+
+
         <label for="edit-transactionOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
         <div class="col-sm-10" style="width: 300px;">
             <select class="form-control" name="owner">
@@ -277,6 +277,7 @@
 
             </select>
             <input type="hidden" name="id" value="${t.id}"/>
+            <input type="hidden" name="customerId" value="${t.customerId}"/>
         </div>
         <label for="edit-amountOfMoney" class="col-sm-2 control-label">金额</label>
         <div class="col-sm-10" style="width: 300px;">
@@ -298,11 +299,11 @@
     </div>
 
     <div class="form-group">
-        <label for="edit-accountName" class="col-sm-2 control-label">客户名称<span
-                style="font-size: 15px; color: red;">*</span></label>
+        <label for="edit-contactsName" class="col-sm-2 control-label">联系人名称<span style="font-size: 15px; color: red;">*</span>&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findContacts"><span
+                class="glyphicon glyphicon-search"></span></a></label>
         <div class="col-sm-10" style="width: 300px;">
-            <input type="text" class="form-control" id="edit-customerName" name="customerName"
-                   value="${t.customerName}" placeholder="支持自动补全，输入客户不存在则新建" />
+            <input type="text" class="form-control" id="edit-contactsName" name="contactsName" value="${t.contactsName}">
+            <input type="hidden" id="edit-contactsId" name="contactsId">
         </div>
         <label for="edit-transactionStage" class="col-sm-2 control-label">阶段<span
                 style="font-size: 15px; color: red;">*</span></label>
@@ -353,12 +354,7 @@
     </div>
 
     <div class="form-group">
-        <label for="edit-contactsName" class="col-sm-2 control-label">联系人名称<span style="font-size: 15px; color: red;">*</span>&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findContacts"><span
-                class="glyphicon glyphicon-search"></span></a></label>
-        <div class="col-sm-10" style="width: 300px;">
-            <input type="text" class="form-control" id="edit-contactsName" name="contactsName" value="${t.contactsName}">
-            <input type="hidden" id="edit-contactsId" name="contactsId" value="${t.contactsId}">
-        </div>
+
     </div>
 
     <div class="form-group">

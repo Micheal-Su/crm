@@ -179,6 +179,26 @@
 
 
             $("#updateBtn").click(function () {
+                if($("#edit-name").val() == ""){
+                    alert("名称不能为空");
+                    return false;
+                }
+                if($("#edit-customerName").val() == ""){
+                    alert("客户名称不能为空");
+                    return false;
+                }
+                if($("#edit-contactsName").val() == ""){
+                    alert("联系人名称不能为空");
+                    return false;
+                }
+                if($("#edit-expectedDate").val() == ""){
+                    alert("请选择预计成交日期");
+                    return false;
+                }
+                if($("#edit-stage").val() == ""){
+                    alert("请选择交易阶段");
+                    return false;
+                }
 
                 $.ajax({
                     url: "workbench/transaction/updateByModal.do",
@@ -188,11 +208,12 @@
                         "name": $.trim($("#edit-name").val()),
                         "money": $.trim($("#edit-money").val()),
                         "expectedDate": $.trim($("#edit-expectedDate").val()),
-                        "customerName": $.trim($("#edit-customerName").val()),
                         "source": $.trim($("#edit-source").val()),
                         "stage": $.trim($("#edit-stage").val()),
                         "activityId": $.trim($("#edit-activityId").val()),
+                        "customerId": $.trim($("#edit-customerId").val()),
                         "contactsId": $.trim($("#edit-contactsId").val()),
+                        "contactsName": $.trim($("#edit-contactsName").val()),
                         "type": $.trim($("#edit-type").val()),
                         "description": $.trim($("#edit-description").val()),
                         "nextContactTime": $.trim($("#edit-nextContactTime").val()),
@@ -207,7 +228,7 @@
                             $("#editActivityModal").modal("hide");
                             window.location.reload();
                         } else {
-                            alert("修改市场活动失败");
+                            alert("修改交易信息失败");
                         }
                     }
                 })
@@ -588,7 +609,7 @@
                                 </c:forEach>
 
                             </select>
-                            <input type="hidden" name="id" value="${t.id}"/>
+                            <input type="hidden" id="edit-customerId" value="${t.customerId}"/>
                         </div>
                         <label for="edit-amountOfMoney" class="col-sm-2 control-label">金额</label>
                         <div class="col-sm-10" style="width: 300px;">
@@ -612,11 +633,11 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="edit-accountName" class="col-sm-2 control-label">客户名称<span
-                                style="font-size: 15px; color: red;">*</span></label>
+                        <label for="edit-contactsName" class="col-sm-2 control-label">联系人名称<span style="font-size: 15px; color: red;">*</span>&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findContacts"><span
+                                class="glyphicon glyphicon-search"></span></a></label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-customerName" name="customerName"
-                                   value="${t.customerName}" placeholder="支持自动补全，输入客户不存在则新建"/>
+                            <input type="text" class="form-control" id="edit-contactsName" value="${t.contactsName}">
+                            <input type="hidden" id="edit-contactsId">
                         </div>
                         <label for="edit-transactionStage" class="col-sm-2 control-label">阶段<span
                                 style="font-size: 15px; color: red;">*</span></label>
@@ -669,16 +690,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="edit-contactsName" class="col-sm-2 control-label">联系人名称&nbsp;&nbsp;<a
-                                href="javascript:void(0);" data-toggle="modal"
-                                data-target="#findContacts"><span
-                                class="glyphicon glyphicon-search"></span></a></label>
-                        <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="edit-contactsName" value="${t.contactsName}">
-                            <input type="hidden" id="edit-contactsId" value="${t.contactsId}">
-                        </div>
-                    </div>
 
                     <div class="form-group">
                         <label for="edit-describe" class="col-sm-2 control-label">描述</label>
@@ -803,6 +814,7 @@
 </div>
 
 <!-- 阶段状态 -->
+<%--jsp中用不了El表达式，只能再取request中的数据--%>
 <div style="position: relative; left: 40px; top: -50px;">
     阶段&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <%
