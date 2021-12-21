@@ -724,6 +724,7 @@
     </div>
 </div>
 
+<%--查找联系人模态窗口--%>
 <div class="modal fade" id="findContacts" role="dialog">
     <div class="modal-dialog" role="document" style="width: 80%;">
         <div class="modal-content">
