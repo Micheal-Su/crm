@@ -68,6 +68,8 @@ public class TranServiceImpl implements TranService {
             con.setOwner(t.getOwner());
             con.setBirth("");
             con.setSource("");
+            con.setEmail("");
+            con.setMphone("");
             //添加客户
             int count1 = contactsDao.save(con);
             if (count1!=1){

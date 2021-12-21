@@ -156,6 +156,12 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    public Activity getById(String activityId) {
+        activityDao = SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
+        return activityDao.getById(activityId);
+    }
+
+    @Override
     public List<Activity> getActivityListByNameAndNotByClueId(Map<String, String> map) {
         activityDao = SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
         List<Activity> aList =activityDao.getActivityListByNameAndNotByClueId(map);

@@ -100,6 +100,65 @@ Set<String> set = pMap.keySet();
             $("#tranForm").submit();
 
         })
+		$("#aname").keydown(function (event){
+			if (event.keyCode==13){
+				$.ajax({
+					//线索本身已经存在的关联活动就不再查询出来了，不可重复关联
+					url:"workbench/transaction/getActivityListByName.do",
+					data:{
+						"aname":$.trim($("#aname").val()),
+					},
+					type:"get",
+					dataType:"json",
+					success:function (data){
+
+						var html = "";
+						$.each(data,function (i,n){
+							html += '<tr>'
+							html += '<td><input type="checkbox" name="axz" value="'+n.id+'"/></td>'
+							html += '<td>'+n.name+'</td>'
+							html += '<td>'+n.startDate+'</td>'
+							html += '<td>'+n.endDate+'</td>'
+							html += '<td>'+n.owner+'</td>'
+							html += '</tr>'
+						})
+						$("#activitySearchBody").html(html);
+
+					}
+				})
+				//展现完列表后，禁用模态窗口默认的回车后刷新整个窗口行为
+				return false;
+			}
+		})
+
+		$("#chooseActivityBtn").click(function (){
+			var $axz = $("input[name=axz]:checked");
+			if ($axz.length==0){
+				alert("请选择市场活动源")
+			}else if ($axz.length>1){
+				alert("只能选择一个市场活动")
+			}
+			else {
+				var activityId = $($axz[0]).val();
+				$.ajax({
+					url:"workbench/activity/getById.do",
+					data: {
+						"activityId":activityId
+					},
+					type:"post",
+					dataType:"json",
+					success:function (data){
+
+
+							$("#findMarketActivity").modal("hide");
+							$("#create-activityId").val(data.id);
+							$("#create-activitySrc").val(data.name);
+
+					}
+				})
+			}
+		})
+
 		$("#cname").keydown(function (event){
 			if (event.keyCode==13){
 				$.ajax({
@@ -113,7 +172,7 @@ Set<String> set = pMap.keySet();
 						var html = "";
 						$.each(data,function (i,n){
 							html += '<tr>'
-							html += '<td><input type="checkbox" name="xz" value="'+n.id+'"/></td>'
+							html += '<td><input type="checkbox" name="cxz" value="'+n.id+'"/></td>'
 							html += '<td>'+n.fullname+'</td>'
 							html += '<td>'+n.email+'</td>'
 							html += '<td>'+n.phone+'</td>'
@@ -128,13 +187,13 @@ Set<String> set = pMap.keySet();
 			}
 		})
 		$("#chooseBtn").click(function (){
-			var $xz = $("input[name=xz]:checked");
-			if ($xz.length==0){
+			var $cxz = $("input[name=cxz]:checked");
+			if ($cxz.length==0){
 				alert("请选择联系人")
-			}else if ($xz.length>1){
+			}else if ($cxz.length>1){
 				alert("只能选择一个联系人")
 			}else {
-				var contactsId = $($xz[0]).val();
+				var contactsId = $($cxz[0]).val();
 			}
 
 			$.ajax({
@@ -174,7 +233,7 @@ Set<String> set = pMap.keySet();
 					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
 						<form class="form-inline" role="form">
 						  <div class="form-group has-feedback">
-						    <input type="text" class="form-control" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
+						    <input type="text" class="form-control" id="aname" style="width: 300px;" placeholder="请输入市场活动名称，支持模糊查询">
 						    <span class="glyphicon glyphicon-search form-control-feedback"></span>
 						  </div>
 						</form>
@@ -189,27 +248,20 @@ Set<String> set = pMap.keySet();
 								<td>所有者</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td><input type="radio" name="activity"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
-							<tr>
-								<td><input type="radio" name="activity"/></td>
-								<td>发传单</td>
-								<td>2020-10-10</td>
-								<td>2020-10-20</td>
-								<td>zhangsan</td>
-							</tr>
+						<tbody id="activitySearchBody">
+
 						</tbody>
 					</table>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button type="button" class="btn btn-primary"  id="chooseActivityBtn">选中</button>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
+
 
 	<!-- 查找联系人 -->	
 	<div class="modal fade" id="findContacts" role="dialog">
@@ -233,7 +285,7 @@ Set<String> set = pMap.keySet();
 					<table id="contactsTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
 						<thead>
 							<tr style="color: #B3B3B3;">
-								<td><input type="checkbox"/></td>
+								<td></td>
 								<td>名称</td>
 								<td>邮箱</td>
 								<td>手机</td>
@@ -333,9 +385,9 @@ Set<String> set = pMap.keySet();
 					</c:forEach>
 				</select>
 			</div>
-			<label for="create-activitySrc" class="col-sm-2 control-label">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findMarketActivity"><span class="glyphicon glyphicon-search"></span></a></label>
+			<label for="create-activitySrc" class="col-sm-2 control-label" >市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findMarketActivity"><span class="glyphicon glyphicon-search"></span></a></label>
 			<div class="col-sm-10" style="width: 300px;">
-				<input type="text" class="form-control" name="create-activitySrc" id="create-activitySrc">
+				<input type="text" class="form-control" readonly name="create-activitySrc" id="create-activitySrc">
 				<input type="hidden" id="create-activityId" name="create-activityId">
 			</div>
 		</div>

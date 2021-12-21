@@ -39,4 +39,6 @@ public interface ActivityService {
     List<Activity> getActivityListByContactsNameButNotId(Map<String, String> map);
 
     List<Activity> getActivityListByContactsId(String contactsId);
+
+    Activity getById(String activityId);
 }

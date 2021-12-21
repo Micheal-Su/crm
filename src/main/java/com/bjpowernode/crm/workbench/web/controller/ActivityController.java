@@ -8,8 +8,11 @@ import com.bjpowernode.crm.utils.*;
 import com.bjpowernode.crm.vo.PaginationVO;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.ActivityRemark;
+import com.bjpowernode.crm.workbench.domain.Contacts;
 import com.bjpowernode.crm.workbench.service.ActivityService;
+import com.bjpowernode.crm.workbench.service.ContactsService;
 import com.bjpowernode.crm.workbench.service.impl.ActivityServiceImpl;
+import com.bjpowernode.crm.workbench.service.impl.ContactsServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,6 +45,8 @@ public class ActivityController extends HttpServlet {
             update(request,response);
         }else if ("/workbench/activity/detail.do".equals(path)){
             detail(request,response);
+        }else if ("/workbench/activity/getById.do".equals(path)){
+            getById(request,response);
         }else if ("/workbench/activity/getRemarkListByAid.do".equals(path)){
             getRemarkListByAid(request,response);
         }else if ("/workbench/activity/deleteRemark.do".equals(path)){
@@ -54,6 +59,12 @@ public class ActivityController extends HttpServlet {
 
     }
 
+    private void getById(HttpServletRequest request, HttpServletResponse response) {
+        String activityId = request.getParameter("activityId");
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        Activity activity = as.getById(activityId);
+        PrintJson.printJsonObj(response, activity);
+    }
 
 
     private void updateRemark(HttpServletRequest request, HttpServletResponse response) {

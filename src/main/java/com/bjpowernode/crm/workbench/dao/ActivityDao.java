@@ -29,7 +29,6 @@ public interface ActivityDao {
 
     List<Activity> getActivityListByName(String aName);
 
-    String getActivityNameById(String id);
 
     List<Activity> getActivityListByContactsNameButNotId(Map<String, String> map);
 

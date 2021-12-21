@@ -76,7 +76,17 @@ public class TranController extends HttpServlet {
             delete(request, response);
         }else if ("/workbench/transaction/getContactsListByName.do".equals(path)) {
             getContactsListByName(request, response);
+        }else if ("/workbench/transaction/getActivityListByName.do".equals(path)) {
+            getActivityListByName(request, response);
         }
+    }
+
+    private void getActivityListByName(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到交易模块-市场活动查询操作\n");
+        String aname = request.getParameter("aname");
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        List<Activity> aList = as.getActivityListByName(aname);
+        PrintJson.printJsonObj(response,aList);
     }
 
     private void getContactsListByName(HttpServletRequest request, HttpServletResponse response) {
