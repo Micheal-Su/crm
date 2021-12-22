@@ -32,5 +32,5 @@ public interface ActivityDao {
 
     List<Activity> getActivityListByContactsNameButNotId(Map<String, String> map);
 
-
+    int deleteInDetail(String id);
 }

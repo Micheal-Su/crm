@@ -13,6 +13,13 @@
         </foreach>
     </select>
 
+    <select id="getCountByCid" resultType="int">
+        select count(*)
+        from tbl_clue_remark
+        where clueId=#{id}
+
+    </select>
+
 
     <delete id="deleteByCids">
         delete
@@ -21,6 +28,12 @@
         <foreach collection="array" item="cid" open="(" close=")" separator=",">
             #{cid}
         </foreach>
+    </delete>
+
+    <delete id="deleteByCid">
+        delete
+        from tbl_clue_remark
+        where clueId=#{id}
     </delete>
 
 

@@ -165,6 +165,36 @@ public class ClueServiceImpl implements ClueService {
     }
 
     @Override
+    public boolean deleteInDetail(String id) {
+        clueDao = SqlSessionUtil.getSqlSession().getMapper(ClueDao.class);
+        boolean flag = true;
+//      ids:复选框选中的id
+
+        //查询出需要删除的备注的数量
+        int count1 = clueRemarkDao.getCountByCid(id);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count2 = clueRemarkDao.deleteByCid(id);
+
+        if (count1!=count2){
+            flag = false;
+        }
+//       解除与市场活动的关联
+        int count4 = clueActivityRelationDao.getCountByCid(id);
+        int count5 = clueActivityRelationDao.unbundByCid(id);
+        if (count4!=count5){
+            flag = false;
+        }
+        //删除线索
+        int count3 = clueDao.deleteInDetail(id);
+        if (count3!= 1){
+            flag = false;
+        }
+        return flag;
+
+    }
+
+    @Override
     public boolean bund(String cid, String[] aids) {
         boolean flag = true;
         for (String aid:aids){
@@ -198,6 +228,7 @@ public class ClueServiceImpl implements ClueService {
             cus.setName(company);
             cus.setWebsite(c.getWebsite());
             cus.setPhone(c.getPhone());
+            System.out.println(c.getPhone()+"\n\n\n\n\n");
             cus.setCreateBy(createBy);
             cus.setCreateTime(createTime);
             cus.setContactSummary(c.getContactSummary());
@@ -220,6 +251,7 @@ public class ClueServiceImpl implements ClueService {
         con.setFullname(c.getFullname());
         con.setAppellation(c.getAppellation());
         con.setEmail(c.getEmail());
+        con.setBirth("");
         con.setMphone(c.getMphone());
         con.setJob(c.getJob());
         con.setCreateBy(createBy);
@@ -298,6 +330,7 @@ public class ClueServiceImpl implements ClueService {
             t.setCustomerId(cus.getId());
             t.setContactSummary(c.getContactSummary());
             t.setContactsId(con.getId());
+            t.setType("");
             //添加交易
             int count6 = tranDao.save(t);
             if (count6!=1){

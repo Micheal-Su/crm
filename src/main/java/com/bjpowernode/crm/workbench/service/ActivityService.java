@@ -41,4 +41,6 @@ public interface ActivityService {
     List<Activity> getActivityListByContactsId(String contactsId);
 
     Activity getById(String activityId);
+
+    boolean deleteInDetail(String id);
 }

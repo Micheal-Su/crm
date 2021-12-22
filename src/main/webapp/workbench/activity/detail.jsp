@@ -105,13 +105,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 }
             })
         })
+
+        $("#deleteBtn").click(function (){
+                if(confirm("确定要删除该活动吗？")){
+
+                    $.ajax({
+                        url:"workbench/activity/deleteInDetail.do",
+                        data: {
+                            "activityId":"${a.id}",
+                        },
+                        type:"post",
+                        dataType:"json",
+                        success:function (data){
+                            if (data.success){
+                                window.location.href="workbench/activity/index.jsp";
+                            }else {
+                                alert("删除市场活动失败")
+                            }
+                        }
+                    })
+                }
+        })
+
         //为保存按钮绑定事件
         $("#saveRemarkBtn").on("click",function (){
             $.ajax({
                 url:"workbench/activity/saveRemark.do",
                 data:{
                     "noteContent":$.trim($("#remark").val()),
-                    "activityId":"${a.id}",
+                    "activityId":"${a.id}"
                 },
                 type:"post",
                 dataType:"json",
@@ -314,11 +336,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class="form-group">
                             <label for="edit-startTime" class="col-sm-2 control-label">开始日期</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time" id="edit-startDate" value="${a.startDate}" >
+                                <input type="text" class="form-control time" readonly id="edit-startDate" value="${a.startDate}" >
                             </div>
                             <label for="edit-endTime" class="col-sm-2 control-label">结束日期</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time" id="edit-endDate" value="${a.endDate}" >
+                                <input type="text" class="form-control time" readonly id="edit-endDate" value="${a.endDate}" >
                             </div>
                         </div>
 
@@ -349,7 +371,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<!-- 返回按钮 -->
 	<div style="position: relative; top: 35px; left: 10px;">
-		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
+		<a href="javascript:void(0);" onclick="window.location.href='workbench/activity/index.jsp';"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
 	</div>
 
 	<!-- 大标题 -->
@@ -360,7 +382,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<div style="position: relative; height: 50px; width: 250px;  top: -72px; left: 700px;">
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
-			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+			<button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>
 	</div>
 

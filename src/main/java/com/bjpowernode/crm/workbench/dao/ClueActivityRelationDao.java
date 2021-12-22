@@ -16,4 +16,8 @@ public interface ClueActivityRelationDao {
     int unbundByCids(String[] ids);
 
     int getCountByCids(String[] ids);
+
+    int getCountByCid(String id);
+
+    int unbundByCid(String id);
 }

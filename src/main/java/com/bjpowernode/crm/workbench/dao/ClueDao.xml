@@ -176,6 +176,10 @@
     delete from tbl_clue where id = #{id}
 </delete>
 
+<delete id="deleteInDetail">
+    delete from tbl_clue where id = #{id}
+</delete>
+
 <delete id="deletes">
     delete from tbl_clue
     where id in

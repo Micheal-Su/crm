@@ -117,6 +117,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			})
 		})
 
+		$("#deleteBtn").click(function (){
+			if(confirm("确定要删除该联系人吗？")){
+
+				$.ajax({
+					url:"workbench/clue/deleteInDetail.do",
+					data: {
+						"clueId":"${c.id}",
+					},
+					type:"post",
+					dataType:"json",
+					success:function (data){
+						if (data.success){
+							window.location.href="workbench/clue/index.jsp";
+						}else {
+							alert("删除线索失败")
+						}
+					}
+				})
+			}
+		})
+
 		//为保存按钮绑定事件
 		$("#saveRemarkBtn").on("click",function (){
 			$.ajax({
@@ -590,7 +611,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 	<!-- 返回按钮 -->
 	<div style="position: relative; top: 35px; left: 10px;">
-		<a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
+		<a href="javascript:void(0);" onclick="window.location.href='workbench/clue/index.jsp';"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
 	</div>
 	
 	<!-- 大标题 -->
@@ -601,7 +622,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">																								<!--两种情况不能以这种方式传参数：1）有敏感信息 2）参数值太长（比如公司简介）-->
 			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp?id=${c.id}&fullname=${c.fullname}&appellation=${c.appellation}&company=${c.company}&owner=${c.owner}';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
-			<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+			<button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>
 	</div>
 	

@@ -52,6 +52,7 @@
     <url-pattern>/workbench/activity/save.do</url-pattern>
     <url-pattern>/workbench/activity/pageList.do</url-pattern>
     <url-pattern>/workbench/activity/delete.do</url-pattern>
+    <url-pattern>/workbench/activity/deleteInDetail.do</url-pattern>
     <url-pattern>/workbench/activity/getUserListAndActivity.do</url-pattern>
     <url-pattern>/workbench/activity/update.do</url-pattern>
     <url-pattern>/workbench/activity/detail.do</url-pattern>
@@ -73,6 +74,7 @@
     <url-pattern>/workbench/customer/save.do</url-pattern>
     <url-pattern>/workbench/customer/pageList.do</url-pattern>
     <url-pattern>/workbench/customer/delete.do</url-pattern>
+    <url-pattern>/workbench/customer/deleteInDetail.do</url-pattern>
     <url-pattern>/workbench/customer/getUserListAndCustomer.do</url-pattern>
     <url-pattern>/workbench/customer/update.do</url-pattern>
     <url-pattern>/workbench/customer/detail.do</url-pattern>
@@ -101,6 +103,7 @@
     <url-pattern>/workbench/contacts/save.do</url-pattern>
     <url-pattern>/workbench/contacts/pageList.do</url-pattern>
     <url-pattern>/workbench/contacts/delete.do</url-pattern>
+    <url-pattern>/workbench/contacts/deleteInDetail.do</url-pattern>
     <url-pattern>/workbench/contacts/getUserListAndContacts.do</url-pattern>
     <url-pattern>/workbench/contacts/update.do</url-pattern>
     <url-pattern>/workbench/contacts/detail.do</url-pattern>
@@ -136,6 +139,7 @@
     <url-pattern>/workbench/clue/getActivityListByName.do</url-pattern>
     <url-pattern>/workbench/clue/convert.do</url-pattern>
     <url-pattern>/workbench/clue/delete.do</url-pattern>
+    <url-pattern>/workbench/clue/deleteInDetail.do</url-pattern>
     <url-pattern>/workbench/clue/saveRemark.do</url-pattern>
     <url-pattern>/workbench/clue/deleteRemark.do</url-pattern>
     <url-pattern>/workbench/clue/updateRemark.do</url-pattern>
@@ -169,6 +173,7 @@
     <url-pattern>/workbench/transaction/updateByModal.do</url-pattern>
     <url-pattern>/workbench/transaction/updateByRedirect.do</url-pattern>
     <url-pattern>/workbench/transaction/delete.do</url-pattern>
+    <url-pattern>/workbench/transaction/deleteInDetail.do</url-pattern>
     <url-pattern>/workbench/transaction/getContactsListByName.do</url-pattern>
     <url-pattern>/workbench/transaction/getActivityListByName.do</url-pattern>
 
