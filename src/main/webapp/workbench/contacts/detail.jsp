@@ -126,6 +126,15 @@
             $(".myHref").mouseout(function () {
                 $(this).children("span").css("color", "#E6E6E6");
             });
+
+            $("#remarkBody").on("mouseover", ".remarkDiv", function () {
+                $(this).children("div").children("div").show();
+            });
+            $("#remarkBody").on("mouseout", ".remarkDiv", function () {
+                $(this).children("div").children("div").hide();
+            });
+
+            showRemarkList();
             showTranList();
             showActivityList();
 
@@ -163,6 +172,93 @@
                         }else{
                             alert("修改联系人失败");
                         }
+                    }
+                })
+            })
+
+            $("#deleteBtn").click(function (){
+                if(confirm("确定要删除该联系人吗？")){
+
+                    $.ajax({
+                        url:"workbench/contacts/deleteInDetail.do",
+                        data: {
+                            "contactsId":"${c.id}",
+                        },
+                        type:"post",
+                        dataType:"json",
+                        success:function (data){
+                            if (data.success){
+                                window.location.href="workbench/contacts/index.jsp";
+                            }else {
+                                alert("删除联系人失败")
+                            }
+                        }
+                    })
+                }
+            })
+
+            //为保存按钮绑定事件
+            $("#saveRemarkBtn").on("click", function () {
+                $.ajax({
+                    url: "workbench/contacts/saveRemark.do",
+                    data: {
+                        "noteContent": $.trim($("#remark").val()),
+                        "contactsId": "${c.id}"
+                        //	在detail.do中已经将c保存在请求域中了
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+
+                        if (data.success) {
+                            //将textarea中内容清空
+                            $("#remark").val("");
+                            //在textarea文本域上方新增一个div
+                            var html = "";
+                            html += '<div id="' + data.cr.id + '" class="remarkDiv" style="height: 60px;">';
+                            html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
+                            html += '<div style="position: relative; top: -40px; left: 40px;" >';
+                            html += '<h5 id="e' + data.cr.id + '">' + data.cr.noteContent + '</h5>';
+                            html += '<font color="gray">联系人</font> <font color="gray">-</font> <b>${c.fullname}-${c.customerName}</b> <small style="color: gray;"> ' + (data.cr.createTime) + ' 由' + (data.cr.createBy) + '</small>';
+                            html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
+                            html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\'' + data.cr.id + '\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+                            html += '&nbsp;&nbsp;&nbsp;&nbsp;';
+                            html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\'' + data.cr.id + '\')"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
+                            html += '</div>';
+                            html += '</div>';
+                            html += '</div>';
+                            $("#remarkDiv").before(html);
+
+                        } else {
+                            alert("添加备注失败");
+                        }
+                    }
+                })
+            })
+
+            $("#updateRemarkBtn").on("click", function () {
+                var id = $("#remarkId").val();
+                $.ajax({
+                    url: "workbench/contacts/updateRemark.do",
+                    data: {
+                        "id": id,
+                        "noteContent": $.trim($("#noteContent").val())
+                    },
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+
+                        if (data.success) {
+                            //更新div中相应的信息，需要更新的内容有 noteContent editTime editBy
+                            $("#e" + id).html(data.cr.noteContent);
+                            $("#s" + id).html(data.cr.editTime + " 由" + data.cr.editBy);
+                            //更新内容之后，关闭模态窗口
+                            $("#editRemarkModal").modal("hide");
+
+                        } else {
+                            alert("更新备注失败")
+                        }
+
                     }
                 })
             })
@@ -318,6 +414,36 @@
                 }
             })
         };
+
+        function showRemarkList() {
+            $.ajax({
+                url: "workbench/contacts/getRemarkListByCid.do",
+                data: {
+                    "contactsId": "${c.id}"
+                },
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    var html = "";
+                    $.each(data, function (i, n) {
+                        html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
+                        html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
+                        html += '<div style="position: relative; top: -40px; left: 40px;" >';
+                        html += '<h5 id="e' + n.id + '">' + n.noteContent + '</h5>';
+                        html += '<font color="gray">联系人</font> <font color="gray">-</font> <b>${c.fullname}-${c.customerName}</b> <small style="color: gray;"id="s' + n.id + '"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + ' 由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
+                        html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
+                        html += '<a class="myHref" href="javascript:void(0);"onclick="editRemark(\'' + n.id + '\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
+                        html += '&nbsp;&nbsp;&nbsp;&nbsp;';
+                        html += '<a class="myHref" href="javascript:void(0);" onclick="deleteRemark(\'' + n.id + '\')"><span class="glyphicon glyphicon-remove" style="font-size: 20px; color: #FF0000;"></span></a>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '</div>';
+                    })
+                    //在添加备注的文本框头上插入
+                    $("#remarkDiv").before(html);
+                }
+            })
+        }
         function showActivityList(){
 
             $.ajax({
@@ -358,6 +484,38 @@
                         showActivityList();
                     }else{
                         alert("解除关联失败")
+                    }
+                }
+            })
+        }
+
+        function editRemark(id) {
+
+            $("#remarkId").val(id);
+
+            var noteContent = $("#e" + id).html();
+
+            $("#noteContent").val(noteContent);
+
+            $("#editRemarkModal").modal("show");
+
+        }
+
+        function deleteRemark(id) {
+            $.ajax({
+                url: "workbench/contacts/deleteRemark.do",
+                data: {
+                    "id": id
+                },
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+
+                    if (data.success) {
+                        $("#" + id).remove();
+
+                    } else {
+                        alert("删除备注失败")
                     }
                 }
             })
@@ -685,6 +843,37 @@
     </div>
 </div>
 
+
+<!-- 修改线索备注的模态窗口 -->
+<div class="modal fade" id="editRemarkModal" role="dialog">
+    <%-- 备注的id --%>
+    <input type="hidden" id="remarkId">
+    <div class="modal-dialog" role="document" style="width: 40%;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel1">修改备注</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="edit-describe" class="col-sm-2 control-label">内容</label>
+                        <div class="col-sm-10" style="width: 81%;">
+                            <textarea class="form-control" rows="3" id="noteContent"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="updateRemarkBtn">更新</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- 返回按钮 -->
 <div style="position: relative; top: 35px; left: 10px;">
     <a href="javascript:void(0);" onclick="window.location.href='workbench/contacts/index.jsp';">
@@ -700,7 +889,7 @@
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editContactsModal"><span
                 class="glyphicon glyphicon-edit"></span> 编辑
         </button>
-        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
     </div>
 </div>
 
@@ -786,43 +975,9 @@
     </div>
 </div>
 <!-- 备注 -->
-<div style="position: relative; top: 20px; left: 40px;">
+<div id="remarkBody" style="position: relative; top: 20px; left: 40px;">
     <div class="page-header">
         <h4>备注</h4>
-    </div>
-
-    <!-- 备注1 -->
-    <div class="remarkDiv" style="height: 60px;">
-        <img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">
-        <div style="position: relative; top: -40px; left: 40px;">
-            <h5>哎呦！</h5>
-            <font color="gray">联系人</font> <font color="gray">-</font> <b>李四先生-北京动力节点</b> <small style="color: gray;">
-            2017-01-22 10:10:10 由zhangsan</small>
-            <div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">
-                <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"
-                                                                   style="font-size: 20px; color: #E6E6E6;"></span></a>
-
-                <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove"
-                                                                   style="font-size: 20px; color: #E6E6E6;"></span></a>
-            </div>
-        </div>
-    </div>
-
-    <!-- 备注2 -->
-    <div class="remarkDiv" style="height: 60px;">
-        <img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">
-        <div style="position: relative; top: -40px; left: 40px;">
-            <h5>呵呵！</h5>
-            <font color="gray">联系人</font> <font color="gray">-</font> <b>李四先生-北京动力节点</b> <small style="color: gray;">
-            2017-01-22 10:20:10 由zhangsan</small>
-            <div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">
-                <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-edit"
-                                                                   style="font-size: 20px; color: #E6E6E6;"></span></a>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <a class="myHref" href="javascript:void(0);"><span class="glyphicon glyphicon-remove"
-                                                                   style="font-size: 20px; color: #E6E6E6;"></span></a>
-            </div>
-        </div>
     </div>
 
     <div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
@@ -831,7 +986,7 @@
                       placeholder="添加备注..."></textarea>
             <p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
                 <button id="cancelBtn" type="button" class="btn btn-default">取消</button>
-                <button type="button" class="btn btn-primary">保存</button>
+                <button id="saveRemarkBtn" type="button" class="btn btn-primary">保存</button>
             </p>
         </form>
     </div>

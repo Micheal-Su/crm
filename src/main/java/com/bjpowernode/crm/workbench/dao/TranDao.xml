@@ -13,6 +13,13 @@
             #{cid}
         </foreach>
     </select>
+
+    <select id="getCountByCusId" resultType="int">
+        select count(*)
+        from tbl_tran
+        where customerId=#{id}
+    </select>
+
     <delete id="deleteByCusIds">
         delete
         from tbl_tran
@@ -20,6 +27,12 @@
         <foreach collection="array" item="cid" open="(" close=")" separator=",">
             #{cid}
         </foreach>
+    </delete>
+
+    <delete id="deleteByCusId">
+        delete
+        from tbl_tran
+        where customerId=#{id}
     </delete>
 
 <select id="getCountByContactsIds" resultType="int">
@@ -30,6 +43,12 @@
             #{cid}
         </foreach>
     </select>
+    <select id="getCountByContactsId" resultType="int">
+        select count(*)
+        from tbl_tran
+        where contactsId=#{id}
+    </select>
+
     <delete id="deleteByContactsIds">
         delete
         from tbl_tran
@@ -39,12 +58,28 @@
         </foreach>
     </delete>
 
+    <delete id="deleteByContactsId">
+        delete
+        from tbl_tran
+        where contactsId=#{id}
+    </delete>
+
     <delete id="delete">
         delete from tbl_tran
         where id in
         <foreach collection="array" item="id" open="(" close=")" separator=",">
             #{id}
         </foreach>
+    </delete>
+
+    <delete id="deleteInDetail">
+        delete from tbl_tran
+        where id=#{id}
+    </delete>
+
+    <delete id="deleteById">
+        delete from tbl_tran
+        where id=#{id}
     </delete>
 
 

@@ -13,6 +13,12 @@
         </foreach>
     </select>
 
+    <select id="getCountByCid" resultType="int">
+        select count(*)
+        from tbl_contacts_remark
+        where contactsId=#{id}
+    </select>
+
 
     <delete id="deleteByCids">
         delete
@@ -23,14 +29,18 @@
         </foreach>
     </delete>
 
+    <delete id="deleteByCid">
+        delete
+        from tbl_contacts_remark
+        where contactsId=#{id}
+    </delete>
+
 	<insert id="save">
         insert into tbl_contacts_remark(
             id,
             noteContent,
             createBy,
             createTime,
-            editBy,
-            editTime,
             editFlag,
             contactsId
         )values (
@@ -38,12 +48,25 @@
             #{noteContent},
             #{createBy},
             #{createTime},
-            #{editBy},
-            #{editTime},
             #{editFlag},
             #{contactsId}
         )
     </insert>
+
+    <delete id="deleteRemark">
+        delete from tbl_contacts_remark where id = #{id}
+    </delete>
+
+    <update id="updateRemark">
+        update tbl_contacts_remark set noteContent=#{noteContent},editBy=#{editBy},editTime=#{editTime}
+        where id = #{id}
+    </update>
+
+    <select id="getListByContactsId" resultType="ContactsRemark">
+        select *
+        from tbl_contacts_remark
+        where contactsId = #{contactsId}
+    </select>
   	
 </mapper>
 

@@ -55,6 +55,8 @@ public class CustomerController extends HttpServlet {
             deleteRemark(request,response);
         }else if ("/workbench/customer/delete.do".equals(path)){
             delete(request,response);
+        }else if ("/workbench/customer/deleteInDetail.do".equals(path)){
+            deleteInDetail(request,response);
         }else if ("/workbench/customer/saveRemark.do".equals(path)){
             saveRemark(request,response);
         }else if ("/workbench/customer/updateRemark.do".equals(path)){
@@ -76,8 +78,20 @@ public class CustomerController extends HttpServlet {
     }
 
     private void deleteTran(HttpServletRequest request, HttpServletResponse response) {
-
+        String tranId = request.getParameter("transactionId");
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        boolean flag = ts.deleteById(tranId);
+        PrintJson.printJsonFlag(response,flag);
     }
+
+    private void deleteInDetail(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到删除市场活动信息的操作");
+        String id = request.getParameter("customerId");
+        CustomerService cs = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        boolean flag = cs.deleteInDetail(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
 
     private void getTranListByCustomerId(HttpServletRequest request, HttpServletResponse response) {
         String customerId = request.getParameter("customerId");

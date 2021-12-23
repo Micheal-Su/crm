@@ -133,8 +133,17 @@ public class TranServiceImpl implements TranService {
         tranDao = SqlSessionUtil.getSqlSession().getMapper(TranDao.class);
 //        一般交易中的客户名称是不会改的
         boolean flag = true;
+        Contacts con = null;
+        Contacts TemCon = new Contacts();
+        TemCon.setFullname(contactsName);
+        TemCon.setId(t.getContactsId());
+        int contactsNum = contactsDao.getContactsNumByName(contactsName);
+        if(contactsNum>1){//若有重名联系人，则再加上Id进行查询
+            con = contactsDao.getContactsByNameAndId(TemCon);
+        }else if(contactsNum==1){
+            con = contactsDao.getContactsByName(contactsName);
+        }
 
-        Contacts con = contactsDao.getContactsByName(contactsName);
         ContactsCustomerRelation ccr = new ContactsCustomerRelation();
         ccr.setCustomerId(t.getCustomerId());
         ccr.setContactsId(t.getContactsId());
@@ -355,6 +364,70 @@ public class TranServiceImpl implements TranService {
         if (count!=1){
             flag=false;
         }
+        return flag;
+    }
+
+
+//    下面两个删除冗余，可以把大部分一样的写成一个方法再引用
+    @Override
+    public boolean deleteInDetail(String id) {
+        tranDao = SqlSessionUtil.getSqlSession().getMapper(TranDao.class);
+        boolean flag = true;
+        //查询出需要删除的备注的数量
+        int count1 = tranRemarkDao.getCountByTid(id);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count2 = tranRemarkDao.deleteByTid(id);
+
+        if (count1!=count2){
+            flag = false;
+        }
+
+        int count3 = tranHistoryDao.getCountByTid(id);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count4 = tranHistoryDao.deleteByTid(id);
+        if (count3!=count4){
+            flag = false;
+        }
+
+        //删除交易
+        int count5 = tranDao.deleteInDetail(id);
+        if (count5!=1){
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    @Override
+    public boolean deleteById(String tranId) {
+        tranDao = SqlSessionUtil.getSqlSession().getMapper(TranDao.class);
+        boolean flag = true;
+        //查询出需要删除的备注的数量
+        int count1 = tranRemarkDao.getCountByTid(tranId);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count2 = tranRemarkDao.deleteByTid(tranId);
+
+        if (count1!=count2){
+            flag = false;
+        }
+
+        int count3 = tranHistoryDao.getCountByTid(tranId);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count4 = tranHistoryDao.deleteByTid(tranId);
+        if (count3!=count4){
+            flag = false;
+        }
+
+        //删除交易
+        int count5 = tranDao.deleteById(tranId);
+        if (count5!=1){
+            flag = false;
+        }
+
         return flag;
     }
 }

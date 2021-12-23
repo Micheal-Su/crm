@@ -19,4 +19,8 @@ public interface TranRemarkDao {
     int deleteRemark(String id);
 
     int updateRemark(TranRemark cr);
+
+    int getCountByTid(String id);
+
+    int deleteByTid(String id);
 }

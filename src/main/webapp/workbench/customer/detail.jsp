@@ -139,6 +139,28 @@
                 })
             })
 
+            $("#deleteBtn").click(function (){
+                if(confirm("确定要删除该客户吗？")){
+
+                    $.ajax({
+                        url:"workbench/customer/deleteInDetail.do",
+                        data: {
+                            "customerId":"${c.id}",
+                        },
+                        type:"post",
+                        dataType:"json",
+                        success:function (data){
+                            if (data.success){
+                                window.location.href="workbench/customer/index.jsp";
+                            }else {
+                                alert("删除客户失败")
+                            }
+                        }
+                    })
+                }
+            })
+
+
             //为保存按钮绑定事件
             $("#saveRemarkBtn").on("click", function () {
                 $.ajax({
@@ -262,6 +284,10 @@
             $("#bundTranBtn").click(function (){
                 if ($("#create-name").val() == "") {
                     alert("名称不能为空");
+                    return false;
+                }
+               if ($("#createTran-stage").val() == "") {
+                    alert("交易阶段不能为空");
                     return false;
                 }
                 $.ajax({
@@ -400,7 +426,6 @@
                 $.ajax({
                     url: "workbench/customer/deleteTran.do",
                     data: {
-                        "customer": "${c.id}",
                         "transactionId": transactionId
                     },
                     type: "post",
@@ -604,7 +629,7 @@
                         <div class="col-sm-10" style="width: 300px;">
                             <input type="text" class="form-control" id="createTran-name">
                         </div>
-                        <label for="create-expectedClosingDate" class="col-sm-2 control-label">预计成交日期<span style="font-size: 15px; color: red;">*</span></label>
+                        <label for="create-expectedClosingDate" class="col-sm-2 control-label">预计成交日期</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <input type="text" class="form-control time1" readonly id="createTran-expectedDate">
                         </div>
@@ -959,7 +984,7 @@
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editCustomerModal"><span
                 class="glyphicon glyphicon-edit"></span> 编辑
         </button>
-        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
     </div>
 </div>
 

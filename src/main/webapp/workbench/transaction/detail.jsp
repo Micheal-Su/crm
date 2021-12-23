@@ -176,8 +176,6 @@
             });
 
 
-
-
             $("#updateBtn").click(function () {
                 if($("#edit-name").val() == ""){
                     alert("名称不能为空");
@@ -234,6 +232,28 @@
                 })
             })
 
+            $("#deleteBtn").click(function (){
+                if(confirm("确定要删除该交易吗？")){
+
+                    $.ajax({
+                        url:"workbench/transaction/deleteInDetail.do",
+                        data: {
+                            "tranId":"${t.id}",
+                        },
+                        type:"post",
+                        dataType:"json",
+                        success:function (data){
+                            if (data.success){
+                                window.location.href="workbench/transaction/index.jsp";
+                            }else {
+                                alert("删除线索失败")
+                            }
+                        }
+                    })
+                }
+            })
+
+
             //为保存按钮绑定事件
             $("#saveRemarkBtn").on("click", function () {
                 $.ajax({
@@ -241,7 +261,6 @@
                     data: {
                         "noteContent": $.trim($("#remark").val()),
                         "tranId": "${t.id}"
-                        //	在detail.do中已经将c保存在请求域中了
                     },
                     type: "post",
                     dataType: "json",
@@ -250,7 +269,6 @@
                         if (data.success) {
                             //将textarea中内容清空
                             $("#remark").val("");
-                            // alert("添加备注成功");
                             //在textarea文本域上方新增一个div
                             var html = "";
                             html += '<div id="' + data.tr.id + '" class="remarkDiv" style="height: 60px;">';
@@ -377,7 +395,7 @@
                                 html += '<td><input type="checkbox" name="cxz" value="'+n.id+'"/></td>'
                                 html += '<td>'+n.fullname+'</td>'
                                 html += '<td>'+n.email+'</td>'
-                                html += '<td>'+n.phone+'</td>'
+                                html += '<td>'+n.mphone+'</td>'
                                 html += '</tr>'
                             })
                             $("#contactsSearchBody").html(html);
@@ -699,7 +717,7 @@
                                 class="glyphicon glyphicon-search"></span></a></label>
                         <div class="col-sm-10" style="width: 300px;">
                             <input type="text" class="form-control" id="edit-contactsName" value="${t.contactsName}">
-                            <input type="hidden" id="edit-contactsId">
+                            <input type="hidden" id="edit-contactsId" value="${t.contactsId}">
                         </div>
                         <label for="edit-transactionStage" class="col-sm-2 control-label">阶段<span
                                 style="font-size: 15px; color: red;">*</span></label>
@@ -914,7 +932,7 @@
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editTranModal"><span
                 class="glyphicon glyphicon-edit"></span> 编辑
         </button>
-        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
     </div>
 </div>
 

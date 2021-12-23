@@ -3,6 +3,7 @@ package com.bjpowernode.crm.workbench.service;
 import com.bjpowernode.crm.vo.PaginationVO;
 import com.bjpowernode.crm.workbench.domain.Activity;
 import com.bjpowernode.crm.workbench.domain.Contacts;
+import com.bjpowernode.crm.workbench.domain.ContactsRemark;
 import com.bjpowernode.crm.workbench.domain.Tran;
 
 import java.util.List;
@@ -30,4 +31,14 @@ public interface ContactsService {
     boolean bundActivity(String cid, String[] aids);
 
     boolean unbundActivity(String id);
+
+    boolean deleteInDetail(String id);
+
+    boolean saveRemark(ContactsRemark cr);
+
+    boolean deleteRemark(String id);
+
+    boolean updateRemark(ContactsRemark cr);
+
+    List<ContactsRemark> getRemarkListByCid(String contactsId);
 }

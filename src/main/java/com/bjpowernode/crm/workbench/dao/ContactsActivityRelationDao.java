@@ -13,4 +13,8 @@ public interface ContactsActivityRelationDao {
     int bund(ContactsActivityRelation car);
 
     int unbund(String id);
+
+    int getCountByCid(String id);
+
+    int unbundByCid(String id);
 }

@@ -13,6 +13,12 @@
         </foreach>
     </select>
 
+    <select id="getCountByCid" resultType="int">
+        select count(*)
+        from tbl_contacts_activity_relation
+        where contactsId=#{id}
+    </select>
+
     <insert id="bund">
         insert into tbl_contacts_activity_relation(id, contactsId, activityId)
         values (#{id}, #{contactsId}, #{activityId})
@@ -31,6 +37,12 @@
         <foreach collection="array" item="cid" open="(" close=")" separator=",">
             #{cid}
         </foreach>
+    </delete>
+
+    <delete id="unbundByCid">
+        delete
+        from tbl_contacts_activity_relation
+        where contactsId=#{id}
     </delete>
 
 	<insert id="save">

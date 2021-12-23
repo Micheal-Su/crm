@@ -74,11 +74,21 @@ public class TranController extends HttpServlet {
             updateByRedirect(request, response);
         } else if ("/workbench/transaction/delete.do".equals(path)) {
             delete(request, response);
-        }else if ("/workbench/transaction/getContactsListByName.do".equals(path)) {
+        } else if ("/workbench/transaction/deleteInDetail.do".equals(path)) {
+            deleteInDetail(request, response);
+        } else if ("/workbench/transaction/getContactsListByName.do".equals(path)) {
             getContactsListByName(request, response);
-        }else if ("/workbench/transaction/getActivityListByName.do".equals(path)) {
+        } else if ("/workbench/transaction/getActivityListByName.do".equals(path)) {
             getActivityListByName(request, response);
         }
+    }
+
+    private void deleteInDetail(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到删除交易信息的操作");
+        String id = request.getParameter("tranId");
+        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        boolean flag = ts.deleteInDetail(id);
+        PrintJson.printJsonFlag(response,flag);
     }
 
     private void getActivityListByName(HttpServletRequest request, HttpServletResponse response) {
@@ -90,7 +100,7 @@ public class TranController extends HttpServlet {
     }
 
     private void getContactsListByName(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("进入到交易模块-关联查询操作\n");
+        System.out.println("进入到交易模块-关联查询操作");
         String cname = request.getParameter("cname");
         ContactsService cs = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
         List<Contacts> cList = cs.getContactsListByName(cname);
@@ -135,7 +145,7 @@ public class TranController extends HttpServlet {
         TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
         boolean flag = ts.updateRemark(tr);
         Map<String,Object> map = new HashMap<String, Object>();
-        map.put("success",true);
+        map.put("success",flag);
         map.put("tr",tr);
         PrintJson.printJsonObj(response,map);
     }

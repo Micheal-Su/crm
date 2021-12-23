@@ -34,4 +34,16 @@ public interface TranDao {
     int getCountByContactsIds(String[] ids);
 
     int deleteByContactsIds(String[] ids);
+
+    int getCountByContactsId(String id);
+
+    int deleteByContactsId(String id);
+
+    int getCountByCusId(String id);
+
+    int deleteByCusId(String id);
+
+    int deleteInDetail(String id);
+
+    int deleteById(String tranId);
 }

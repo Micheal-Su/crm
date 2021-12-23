@@ -101,6 +101,10 @@
     <url-pattern>/workbench/contacts/getUserList.do</url-pattern>
     <url-pattern>/workbench/contacts/getCustomerName.do</url-pattern>
     <url-pattern>/workbench/contacts/save.do</url-pattern>
+    <url-pattern>/workbench/contacts/saveRemark.do</url-pattern>
+    <url-pattern>/workbench/contacts/deleteRemark.do</url-pattern>
+    <url-pattern>/workbench/contacts/updateRemark.do</url-pattern>
+    <url-pattern>/workbench/contacts/getRemarkListByCid.do</url-pattern>
     <url-pattern>/workbench/contacts/pageList.do</url-pattern>
     <url-pattern>/workbench/contacts/delete.do</url-pattern>
     <url-pattern>/workbench/contacts/deleteInDetail.do</url-pattern>
