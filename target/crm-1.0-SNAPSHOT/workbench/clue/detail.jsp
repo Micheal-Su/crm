@@ -161,7 +161,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
 						html += '<div style="position: relative; top: -40px; left: 40px;" >';
 						html += '<h5 id="e'+data.cr.id+'">'+data.cr.noteContent+'</h5>';
-						html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${c.fullname}</b> <small style="color: gray;"> '+(data.cr.createTime)+' 由'+(data.cr.createBy)+'</small>';
+						html += '<font color="aqua">市场活动</font> <font color="aqua">-</font> <b>${c.fullname}</b> <small style="color: aqua;"> '+(data.cr.createTime)+' 由'+(data.cr.createBy)+'</small>';
 						html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
 						html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\''+data.cr.id+'\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
 						html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -290,8 +290,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					html += '<div id="'+n.id+'" class="remarkDiv" style="height: 60px;">';
 					html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
 					html += '<div style="position: relative; top: -40px; left: 40px;" >';
-					html += '<h5 id="e'+n.id+'">'+n.noteContent+'</h5>';
-					html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${c.fullname}</b> <small style="color: gray;"id="s'+n.id+'"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small>';
+					html += '<h5 style="color: aquamarine" id="e'+n.id+'">'+n.noteContent+'</h5>';
+					html += '<font color="aqua">市场活动</font> <font color="aqua">-</font> <b>${c.fullname}</b> <small style="color: aqua;"id="s'+n.id+'"> '+(n.editFlag==0?n.createTime:n.editTime)+' 由'+(n.editFlag==0?n.createBy:n.editBy)+'</small>';
 					html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
 					html += '<a class="myHref" href="javascript:void(0);"onclick="editRemark(\''+n.id+'\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
 					html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -321,12 +321,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 				var html = "";
 				$.each(data,function (i,n){
-					html += '<tr>';
-					html += '<td>'+n.name+'</td>';
+					html += '<tr class="table-tr">';
+					html += '<td><a style="color: aquamarine;text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/activity/detail.do?id=' + n.id + '\';">' + n.name + '</a></td>';
 					html += '<td>'+n.startDate+'</td>';
 					html += '<td>'+n.endDate+'</td>';
 					html += '<td>'+n.owner+'</td>';				//这里的id是关联关系表的id（mysql重命名了）
-					html += '<td><a href="javascript:void(0);" onclick="unbund(\''+n.id+'\')" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>';
+					html += '<td><a href="javascript:void(0);" onclick="unbund(\''+n.id+'\')" style="color: red;text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>解除关联</a></td>';
 					html += '</tr>';
 				})
 				$("#activityBody").html(html);
@@ -395,14 +395,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </script>
 
+	<style>
+		.table-tr:hover{
+			background-color: #5e5e5e;
+		}
+	</style>
+
 </head>
-<body>
+<body style="background-color: #222222">
 	<!-- 修改备注的模态窗口 -->
 	<div class="modal fade" id="editRemarkModal" role="dialog">
 		<%-- 备注的id --%>
 		<input type="hidden" id="remarkId">
 		<div class="modal-dialog" role="document" style="width: 40%;">
-			<div class="modal-content">
+			<div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
@@ -430,12 +436,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 关联市场活动的模态窗口 -->
 	<div class="modal fade" id="bundModal" role="dialog">
 		<div class="modal-dialog" role="document" style="width: 80%;">
-			<div class="modal-content">
+			<div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">
 						<span aria-hidden="true">×</span>
 					</button>
-					<h4 class="modal-title">关联市场活动</h4>
+					<h4 style="color: #a20fff" class="modal-title">关联市场活动</h4>
 				</div>
 				<div class="modal-body">
 					<div class="btn-group" style="position: relative; top: 18%; left: 8px;">
@@ -446,7 +452,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						  </div>
 						</form>
 					</div>
-					<table id="activityTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
+					<table id="activityTable" class="table" style="width: 900px; position: relative;top: 10px;">
 						<thead>
 							<tr style="color: #B3B3B3;">
 								<td><input type="checkbox"/></td>
@@ -473,10 +479,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <!-- 修改线索的模态窗口 -->
     <div class="modal fade" id="editClueModal" role="dialog">
         <div class="modal-dialog" role="document" style="width: 90%;">
-            <div class="modal-content">
+			<div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
+                        <span style="color: aquamarine" aria-hidden="true">×</span>
                     </button>
                     <h4 class="modal-title" id="myModalLabel">修改线索</h4>
                 </div>
@@ -488,7 +494,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="col-sm-10" style="width: 300px;">
                                 <select class="form-control" id="edit-owner">
 									<c:forEach items="${clueUserList}" var="u">
-										<option value="${u.id}" ${c.owner eq u.name ? "selected" : ""}>${u.name}</option>
+										<option style="background-color: #333333;color:aquamarine" value="${u.id}" ${c.owner eq u.name ? "selected" : ""}>${u.name}</option>
 									</c:forEach>
                                 </select>
                             </div>
@@ -502,9 +508,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <label for="edit-call" class="col-sm-2 control-label">称呼</label>
                             <div class="col-sm-10" style="width: 300px;">
                                 <select class="form-control" id="edit-appellation">
-                                    <option></option>
+                                    <option style="background-color: #333333;color:aquamarine"></option>
 									<c:forEach items="${appellationList}" var="a">
-										<option value="${a.value}" ${c.appellation eq a.value ? "selected" : ""}>${a.text}</option>
+										<option style="background-color: #333333;color:aquamarine" value="${a.value}" ${c.appellation eq a.value ? "selected" : ""}>${a.text}</option>
 									</c:forEach>
                                 </select>
                             </div>
@@ -544,9 +550,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <label for="edit-status" class="col-sm-2 control-label">线索状态</label>
                             <div class="col-sm-10" style="width: 300px;">
                                 <select class="form-control" id="edit-state">
-                                    <option></option>
+                                    <option style="background-color: #333333;color:aquamarine"></option>
 									<c:forEach items="${clueStateList}" var="cs">
-										<option value="${cs.value}" ${c.state eq cs.value ? "selected" : ""}>${cs.text}</option>
+										<option style="background-color: #333333;color:aquamarine" value="${cs.value}" ${c.state eq cs.value ? "selected" : ""}>${cs.text}</option>
 									</c:forEach>
                                 </select>
                             </div>
@@ -556,9 +562,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <label for="edit-source" class="col-sm-2 control-label">线索来源</label>
                             <div class="col-sm-10" style="width: 300px;">
                                 <select class="form-control" id="edit-source">
-                                    <option></option>
+                                    <option style="background-color: #333333;color:aquamarine"></option>
 									<c:forEach items="${sourceList}" var="s">
-										<option value="${s.value}" ${c.source eq s.value ? "selected" : ""}>${s.text}</option>
+										<option style="background-color: #333333;color:aquamarine" value="${s.value}" ${c.source eq s.value ? "selected" : ""}>${s.text}</option>
 									</c:forEach>
                                 </select>
                             </div>
@@ -613,114 +619,115 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div style="position: relative; top: 35px; left: 10px;">
 		<a href="javascript:void(0);" onclick="window.location.href='workbench/clue/index.jsp';"><span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
 	</div>
-	
+
 	<!-- 大标题 -->
 	<div style="position: relative; left: 40px; top: -30px;">
 		<div class="page-header">
-			<h3> ${c.fullname}<small>${c.company}</small></h3>
+			<h3 style="color: whitesmoke"> ${c.fullname}<small>${c.company}</small></h3>
 		</div>
-		<div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">																								<!--两种情况不能以这种方式传参数：1）有敏感信息 2）参数值太长（比如公司简介）-->
+		<div style="background-color: #222222;position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">																								<!--两种情况不能以这种方式传参数：1）有敏感信息 2）参数值太长（比如公司简介）-->
 			<button type="button" class="btn btn-default" onclick="window.location.href='workbench/clue/convert.jsp?id=${c.id}&fullname=${c.fullname}&appellation=${c.appellation}&company=${c.company}&owner=${c.owner}';"><span class="glyphicon glyphicon-retweet"></span> 转换</button>
 			<button type="button" class="btn btn-default" data-toggle="modal" data-target="#editClueModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
 			<button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
 		</div>
 	</div>
-	
+
 	<!-- 详细信息 -->
 	<div style="position: relative; top: -70px;">
 		<div style="position: relative; left: 40px; height: 30px;">
-			<div style="width: 300px; color: gray;">称呼</div>
+			<div style="width: 300px; color: aqua;">称呼</div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">所有者</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${c.fullname}${c.appellation}</b></div>
-			<div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${c.owner}</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">所有者</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -40px;color: aquamarine;"><b>${c.fullname}${c.appellation}</b></div>
+			<div style="width: 300px;position: absolute; left: 650px; top: 0px;color: aquamarine;"><b>${c.owner}</b></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 10px;">
-			<div style="width: 300px; color: gray;">公司</div>
+			<div style="width: 300px; color: aqua;">公司</div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">职位</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${c.company}</b></div>
-			<div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${c.job}</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">职位</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -40px;color: aquamarine;"><b>${c.company}</b></div>
+			<div style="width: 300px;position: absolute; left: 650px; top: 0px;color: aquamarine;"><b>${c.job}</b></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 20px;">
-			<div style="width: 300px; color: gray;">邮箱</div>
+			<div style="width: 300px; color: aqua;">邮箱</div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">公司座机</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${c.email}</b></div>
-			<div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${c.phone}</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">公司座机</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -40px;color: aquamarine;"><b>${c.email}</b></div>
+			<div style="width: 300px;position: absolute; left: 650px; top: 0px;color: aquamarine;"><b>${c.phone}</b></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 30px;">
-			<div style="width: 300px; color: gray;">公司网站</div>
+			<div style="width: 300px; color: aqua;">公司网站</div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">手机</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${c.website}</b></div>
-			<div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${c.mphone}</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">手机</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -40px;color: aquamarine;"><b>${c.website}</b></div>
+			<div style="width: 300px;position: absolute; left: 650px; top: 0px;color: aquamarine;"><b>${c.mphone}</b></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 40px;">
-			<div style="width: 300px; color: gray;">线索状态</div>
+			<div style="width: 300px; color: aqua;">线索状态</div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">线索来源</div>
-			<div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${c.state}</b></div>
-			<div style="width: 300px;position: relative; left: 650px; top: 0px;"><b>${c.source}</b></div>
+			<div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">线索来源</div>
+			<div style="width: 300px;position: relative; left: 200px; top: -40px; color: aquamarine"><b>${c.state}</b></div>
+			<div style="width: 300px;position: absolute; left: 650px; top: 0px; color: aquamarine"><b>${c.source}</b></div>
 		</div>
+
 		<div style="position: relative; left: 40px; height: 30px; top: 50px;">
-			<div style="width: 300px; color: gray;">创建者</div>
+			<div style="width: 300px; color: aqua;">创建者</div>
 			<div style="height: 1px; width: 450px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${c.createBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${c.createTime}</small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;color: aquamarine;"><b>${c.createBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: whitesmoke;">${c.createTime}</small></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 60px;">
-			<div style="width: 300px; color: gray;">修改者</div>
+			<div style="width: 300px; color: aqua;">修改者</div>
 			<div style="height: 1px; width: 450px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
-			<div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${c.editBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: gray;">${c.editTime}</small></div>
+			<div style="width: 500px;position: relative; left: 200px; top: -20px;color: aquamarine;"><b>${c.editBy}&nbsp;&nbsp;</b><small style="font-size: 10px; color: whitesmoke;">${c.editTime}</small></div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 70px;">
-			<div style="width: 300px; color: gray;">描述</div>
+			<div style="width: 300px; color: aqua;">描述</div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
-			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
+			<div style="color: aquamarine;width: 630px;position: relative; left: 200px; top: -20px;">
 				<b>
 					${c.description}
 				</b>
 			</div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 80px;">
-			<div style="width: 300px; color: gray;">联系纪要</div>
+			<div style="width: 300px; color: aqua;">联系纪要</div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
-			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
+			<div style="color: aquamarine;width: 630px;position: relative; left: 200px; top: -20px;">
 				<b>
 					${c.contactSummary}
 				</b>
 			</div>
 		</div>
 		<div style="position: relative; left: 40px; height: 30px; top: 90px;">
-			<div style="width: 300px; color: gray;">下次联系时间</div>
+			<div style="width: 300px; color: aqua;">下次联系时间</div>
 			<div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
-			<div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${c.nextContactTime}</b></div>
+			<div style="width: 300px;position: relative; left: 200px; top: -20px;color: aquamarine;"><b>${c.nextContactTime}</b></div>
 		</div>
         <div style="position: relative; left: 40px; height: 30px; top: 100px;">
-            <div style="width: 300px; color: gray;">详细地址</div>
+            <div style="width: 300px; color: aqua;">详细地址</div>
 			<div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
-			<div style="width: 630px;position: relative; left: 200px; top: -20px;">
+			<div style="color: aquamarine;width: 630px;position: relative; left: 200px; top: -20px;">
                 <b>
                     ${c.address}
                 </b>
             </div>
         </div>
 	</div>
-	
+
 	<!-- 备注 -->
-	<div id="remarkBody" style="position: relative; top: 40px; left: 40px;">
+	<div id="remarkBody" style="color: aqua;position: relative; top: 40px; left: 40px;">
 		<div class="page-header">
 			<h4>备注</h4>
 		</div>
 
-		<div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
+		<div id="remarkDiv" style="background-color: #5e5e5e; width: 870px; height: 90px;">
 			<form role="form" style="position: relative;top: 10px; left: 10px;">
-				<textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
+				<textarea id="remark" class="form-control" style="background-color: #9d9d9d;color: #c8e5bc;width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
 				<p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
 					<button id="cancelBtn" type="button" class="btn btn-default">取消</button>
 					<button id="saveRemarkBtn" type="button"  class="btn btn-primary">保存</button>
@@ -728,15 +735,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</form>
 		</div>
 	</div>
-	
+
 	<!-- 市场活动 -->
 	<div>
-		<div style="position: relative; top: 60px; left: 40px;">
+		<div style="color: aqua;position: relative; top: 60px; left: 40px;">
 			<div class="page-header">
 				<h4>市场活动</h4>
 			</div>
 			<div style="position: relative;top: 0px;">
-				<table class="table table-hover" style="width: 900px;">
+				<table class="table" style="width: 900px;">
 					<thead>
 						<tr style="color: #B3B3B3;">
 							<td>名称</td>
@@ -751,13 +758,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					</tbody>
 				</table>
 			</div>
-			
+
 			<div>
-				<a href="javascript:void(0);" data-toggle="modal" data-target="#bundModal" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>关联市场活动</a>
+				<a style="color: #a20fff" href="javascript:void(0);" data-toggle="modal" data-target="#bundModal" style="text-decoration: none;"><span style="color: #a20fff" class="glyphicon glyphicon-plus"></span>关联市场活动</a>
 			</div>
 		</div>
 	</div>
-	
 	
 	<div style="height: 200px;"></div>
 </body>

@@ -112,7 +112,7 @@
 
                             var html = "";
                             $.each(data,function (i,n){
-                                html += '<tr>'
+                                html += '<tr class="table-tr">'
                                 html += '<td><input type="checkbox" name="axz" value="'+n.id+'"/></td>'
                                 html += '<td>'+n.name+'</td>'
                                 html += '<td>'+n.startDate+'</td>'
@@ -169,7 +169,7 @@
                         success:function (data){
                             var html = "";
                             $.each(data,function (i,n){
-                                html += '<tr>'
+                                html += '<tr class="table-tr">'
                                 html += '<td><input type="checkbox" name="cxz" value="'+n.id+'"/></td>'
                                 html += '<td>'+n.fullname+'</td>'
                                 html += '<td>'+n.email+'</td>'
@@ -213,14 +213,19 @@
         })
     </script>
 
-</head>
-<body>
+    <style>
+        .table-tr:hover{
+            background-color: #5e5e5e;
+        }
+    </style>
 
+</head>
+<body style="background-color: #222222">
 
 <!-- 查找市场活动 -->
 <div class="modal fade" id="findMarketActivity" role="dialog">
     <div class="modal-dialog" role="document" style="width: 80%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
@@ -236,7 +241,7 @@
                         </div>
                     </form>
                 </div>
-                <table id="activityTable3" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
+                <table id="activityTable3" class="table" style="width: 900px; position: relative;top: 10px;">
                     <thead>
                     <tr style="color: #B3B3B3;">
                         <td></td>
@@ -262,7 +267,7 @@
 <!-- 查找联系人 -->
 <div class="modal fade" id="findContacts" role="dialog">
     <div class="modal-dialog" role="document" style="width: 80%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
@@ -278,7 +283,7 @@
                         </div>
                     </form>
                 </div>
-                <table id="contactsTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
+                <table id="contactsTable" class="table" style="width: 900px; position: relative;top: 10px;">
                     <thead>
                     <tr style="color: #B3B3B3;">
                         <td></td>
@@ -300,8 +305,8 @@
     </div>
 </div>
 
-<div style="position:  relative; left: 30px;">
-    <h3>更新交易</h3>
+<div style="background-color: #222222;position:  relative; left: 30px;">
+    <h3 style="color: aqua">更新交易</h3>
     <div style="position: relative; top: -40px; left: 70%;">
         <button type="button" class="btn btn-primary" id="updateBtn">更新</button>
         <button type="button" onclick="window.history.back();" class="btn btn-default">取消</button>
@@ -312,14 +317,14 @@
 
 <%--更新交易表单--%>
 <form id="editForm" action="workbench/transaction/updateByRedirect.do" class="form-horizontal" role="form"
-      style="position: relative; top: -30px;">
+      style="color: aqua;background-color: #222222;position: relative; top: -30px;">
     <div class="form-group">
 
         <label for="edit-transactionOwner" class="col-sm-2 control-label">所有者<span style="font-size: 15px; color: red;">*</span></label>
         <div class="col-sm-10" style="width: 300px;">
             <select class="form-control" name="owner">
                 <c:forEach items="${tranUserList}" var="u">
-                    <option value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
+                    <option style="background-color: #333333;color:aquamarine" value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
                 </c:forEach>
 
             </select>
@@ -356,9 +361,9 @@
                 style="font-size: 15px; color: red;">*</span></label>
         <div class="col-sm-10" style="width: 300px;">
             <select class="form-control" name="stage" id="edit-stage">
-                <option></option>
+                <option style="background-color: #333333;color:aquamarine"></option>
                 <c:forEach items="${stageList}" var="s">
-                    <option value="${s.value}" ${t.stage eq s.value ? "selected" : ""}>${s.text}</option>
+                    <option style="background-color: #333333;color:aquamarine" value="${s.value}" ${t.stage eq s.value ? "selected" : ""}>${s.text}</option>
                 </c:forEach>
             </select>
         </div>
@@ -368,9 +373,9 @@
         <label for="edit-transactionType" class="col-sm-2 control-label">类型</label>
         <div class="col-sm-10" style="width: 300px;">
             <select class="form-control" name="type">
-                <option></option>
+                <option style="background-color: #333333;color:aquamarine"></option>
                 <c:forEach items="${transactionTypeList}" var="tran">
-                    <option value="${tran.value}" ${t.type eq tran.value ? "selected" : ""}>${tran.text}</option>
+                    <option style="background-color: #333333;color:aquamarine"value="${tran.value}" ${t.type eq tran.value ? "selected" : ""}>${tran.text}</option>
                 </c:forEach>
             </select>
         </div>
@@ -384,9 +389,9 @@
         <label for="edit-clueSource" class="col-sm-2 control-label">来源</label>
         <div class="col-sm-10" style="width: 300px;">
             <select class="form-control" name="source">
-                <option></option>
+                <option style="background-color: #333333;color:aquamarine"></option>
                 <c:forEach items="${sourceList}" var="s">
-                    <option value="${s.value}" ${t.source eq s.value ? "selected" : ""}>${s.text}</option>
+                    <option style="background-color: #333333;color:aquamarine" value="${s.value}" ${t.source eq s.value ? "selected" : ""}>${s.text}</option>
                 </c:forEach>
             </select>
         </div>
