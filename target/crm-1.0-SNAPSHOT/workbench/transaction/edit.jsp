@@ -217,6 +217,11 @@
         .table-tr:hover{
             background-color: #5e5e5e;
         }
+
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
     </style>
 
 </head>
@@ -346,7 +351,7 @@
         <label for="edit-expectedClosingDate" class="col-sm-2 control-label">预计成交日期<span
                 style="font-size: 15px; color: red;">*</span></label>
         <div class="col-sm-10" style="width: 300px;">
-            <input type="text" class="form-control time1" readonly name="expectedDate" value="${t.expectedDate}">
+            <input style="background-color: #5e5e5e" type="text" class="form-control time1" readonly name="expectedDate" value="${t.expectedDate}">
         </div>
     </div>
 
@@ -399,7 +404,7 @@
         <label for="edit-activitySrc" class="col-sm-2 control-label">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findMarketActivity"><span
                 class="glyphicon glyphicon-search"></span></a></label>
         <div class="col-sm-10" style="width: 300px;">
-            <input type="text" class="form-control" readonly id="edit-activitySrc" name="activitySource" value="${t.activityName}">
+            <input style="background-color: #5e5e5e" type="text" class="form-control" readonly id="edit-activitySrc" name="activitySource" value="${t.activityName}">
             <!--选到看到的是activityName，本质提交的是activityId-->
             <input type="hidden" id="edit-activityId" name="activityId" value="${t.activityId}">
         </div>
@@ -426,7 +431,7 @@
     <div class="form-group">
         <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
         <div class="col-sm-10" style="width: 300px;">
-            <input type="text" class="form-control time" readonly name="nextContactTime" value="${t.nextContactTime}">
+            <input style="background-color: #5e5e5e" type="text" class="form-control time" readonly name="nextContactTime" value="${t.nextContactTime}">
         </div>
     </div>
 

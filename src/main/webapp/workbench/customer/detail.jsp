@@ -523,6 +523,11 @@
         .table-tr:hover{
             background-color: #5e5e5e;
         }
+
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
     </style>
 
 </head>
@@ -636,7 +641,7 @@
                         </div>
                         <label for="create-expectedClosingDate" class="col-sm-2 control-label">预计成交日期</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" readonly id="createTran-expectedDate">
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" readonly id="createTran-expectedDate">
                         </div>
                     </div>
 
@@ -710,7 +715,7 @@
                     <div class="form-group">
                         <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time2" readonly id="createTran-nextContactTime">
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time2" readonly id="createTran-nextContactTime">
                         </div>
                     </div>
                 </form>
@@ -836,7 +841,7 @@
                         </div>
                         <label for="create-birth" class="col-sm-2 control-label">生日</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" readonly class="form-control time1" id="create-birth">
+                            <input style="background-color: #5e5e5e" type="text" readonly class="form-control time1" id="create-birth">
                         </div>
                     </div>
 
@@ -860,7 +865,7 @@
                         <div class="form-group">
                             <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time2" id="create-nextContactTime" readonly>
+                                <input style="background-color: #5e5e5e" type="text" class="form-control time2" id="create-nextContactTime" readonly>
                             </div>
                         </div>
                     </div>
@@ -947,7 +952,7 @@
                         <div class="form-group">
                             <label for="edit-nextContactTime2" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" readonly class="form-control time" id="edit-nextContactTime"
+                                <input style="background-color: #5e5e5e" type="text" readonly class="form-control time" id="edit-nextContactTime"
                                        value="${c.nextContactTime}">
                             </div>
                         </div>

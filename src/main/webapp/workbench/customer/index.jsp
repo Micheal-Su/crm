@@ -293,6 +293,13 @@
 			})
 		}
 	</script>
+
+	<style>
+		.form-control{
+			background-color: #5e5e5e;
+			color: #e8ff2f;
+		}
+	</style>
 </head>
 <body style="background-color: #222222;">
 
@@ -355,7 +362,7 @@
 						<div class="form-group">
 							<label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control time" readonly id="create-nextContactTime">
+								<input style="background-color: #5e5e5e" type="text" class="form-control time" readonly id="create-nextContactTime">
 							</div>
 						</div>
 					</div>
@@ -438,7 +445,7 @@
 						<div class="form-group">
 							<label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
 							<div class="col-sm-10" style="width: 300px;">
-								<input type="text" class="form-control time" readonly id="edit-nextContactTime">
+								<input style="background-color: #5e5e5e" type="text" class="form-control time" readonly id="edit-nextContactTime">
 							</div>
 						</div>
 					</div>
@@ -464,9 +471,6 @@
 	</div>
 </div>
 
-
-
-
 <div>
 	<div style="color: whitesmoke;position: relative; left: 10px; top: -10px;">
 		<div class="page-header">
@@ -478,7 +482,6 @@
 <div style="position: relative; top: -20px; left: 0px; width: 100%; height: 100%;">
 
 	<div style="width: 100%; position: absolute;top: 5px; left: 10px;">
-
 
 		<div class="btn-toolbar" role="toolbar" style="height: 80px;">
 			<%--	查询表单  --%>

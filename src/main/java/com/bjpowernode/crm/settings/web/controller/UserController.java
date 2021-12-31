@@ -15,19 +15,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UserController extends HttpServlet {
     @Override
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        
 
         System.out.println("进入到用户控制器");
         String path = request.getServletPath();
         if ("/settings/user/login.do".equals(path)){
             login(request,response);
         }else if ("/settings/user/xxx.do".equals(path)){
-
         }
 
     }
@@ -48,7 +47,6 @@ public class UserController extends HttpServlet {
         try {
             User user = us.login(loginAct,loginPwd,ip);
             request.getSession().setAttribute("user",user);
-            System.out.println("try\n\n\n\n");
             PrintJson.printJsonFlag(response,true);
         }catch (Exception e){
             e.printStackTrace();
@@ -57,7 +55,6 @@ public class UserController extends HttpServlet {
             Map<String,Object> map = new HashMap<>();
             map.put("success",false);
             map.put("msg",msg);
-            System.out.println("catch\n\n\n\n\n");
             PrintJson.printJsonObj(response,map);
         }
     }

@@ -173,6 +173,12 @@
         }
 
     </script>
+    <style>
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
+    </style>
 </head>
 <body style="background-color: #222222;">
 <input type="hidden" id="hidden-owner"/>

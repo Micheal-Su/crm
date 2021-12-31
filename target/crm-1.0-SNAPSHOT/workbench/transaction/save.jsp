@@ -219,7 +219,13 @@
 		.table-tr:hover{
 			background-color: #5e5e5e;
 		}
+
+		.form-control{
+			background-color: #5e5e5e;
+			color: #e8ff2f;
+		}
 	</style>
+
 </head>
 <body style="background-color: #222222">
 
@@ -337,7 +343,7 @@
 		</div>
 		<label for="create-expectedClosingDate" class="col-sm-2 control-label">预计成交日期<span style="font-size: 15px; color: red;">*</span></label>
 		<div class="col-sm-10" style="width: 300px;">
-			<input type="text" class="form-control time1" readonly id="create-expectedDate" name="create-expectedDate">
+			<input style="background-color: #5e5e5e" type="text" class="form-control time1" readonly id="create-expectedDate" name="create-expectedDate">
 		</div>
 	</div>
 
@@ -387,7 +393,7 @@
 		</div>
 		<label for="create-activitySrc" class="col-sm-2 control-label" >市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" data-toggle="modal" data-target="#findMarketActivity"><span class="glyphicon glyphicon-search"></span></a></label>
 		<div class="col-sm-10" style="width: 300px;">
-			<input type="text" class="form-control" readonly name="create-activitySrc" id="create-activitySrc">
+			<input style="background-color: #5e5e5e" type="text" class="form-control" readonly name="create-activitySrc" id="create-activitySrc">
 			<input type="hidden" id="create-activityId" name="create-activityId">
 		</div>
 	</div>
@@ -417,7 +423,7 @@
 	<div class="form-group">
 		<label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
 		<div class="col-sm-10" style="width: 300px;">
-			<input type="text" class="form-control time2" readonly id="create-nextContactTime" name="create-nextContactTime">
+			<input style="background-color: #5e5e5e" type="text" class="form-control time2" readonly id="create-nextContactTime" name="create-nextContactTime">
 		</div>
 	</div>
 

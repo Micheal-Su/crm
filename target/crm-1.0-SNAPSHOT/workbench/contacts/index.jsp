@@ -316,10 +316,10 @@
                         html += '<tr class="active">';
                         html += '<td style="background-color: #5e5e5e"><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
                         html += '<td style="background-color: #5e5e5e"><a style="color: aquamarine ;text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/contacts/detail.do?id=' + n.id + '\';">' + n.fullname + '</a></td>';
-                        html += '<td style="background-color: #5e5e5e">' + n.customerName + '</td>';
-                        html += '<td style="background-color: #5e5e5e">' + n.owner + '</td>';
-                        html += '<td style="background-color: #5e5e5e">' + n.source + '</td>';
-                        html += '<td style="background-color: #5e5e5e">' + n.birth + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.customerName + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.owner + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.source + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.birth + '</td>';
                         html += '</tr>';
 
                     })
@@ -353,6 +353,13 @@
             })
         }
     </script>
+
+    <style>
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
+    </style>
 </head>
 <body style="background-color: #222222;">
 <input type="hidden" id="hidden-fullname"/>
@@ -429,7 +436,7 @@
                         </div>
                         <label for="create-birth" class="col-sm-2 control-label">生日</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" id="create-birth" readonly>
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" id="create-birth" readonly>
                         </div>
                     </div>
 
@@ -461,7 +468,7 @@
                         <div class="form-group">
                             <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time2" id="create-nextContactTime" readonly>
+                                <input style="background-color: #5e5e5e" type="text" class="form-control time2" id="create-nextContactTime" readonly>
                             </div>
                         </div>
                     </div>
@@ -555,7 +562,7 @@
                         </div>
                         <label for="edit-birth" class="col-sm-2 control-label">生日</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" id="edit-birth" readonly>
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" id="edit-birth" readonly>
                         </div>
                     </div>
 
@@ -587,7 +594,7 @@
                         <div class="form-group">
                             <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time2" id="edit-nextContactTime" readonly>
+                                <input style="background-color: #5e5e5e" type="text" class="form-control time2" id="edit-nextContactTime" readonly>
                             </div>
                         </div>
                     </div>

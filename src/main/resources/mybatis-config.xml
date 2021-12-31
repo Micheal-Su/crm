@@ -15,11 +15,30 @@
 -->
   
   </typeAliases>
-  
-  <environments default="development">
+
+  <!-- 环境配置: 数据库的连接信息
+     default：必须和某个environment的id值一样。
+     告诉mybatis使用哪个数据库的连接信息。
+--><environments default="development">
+          <!--
+              environment : 一个数据库信息的配置，环境
+              id：一个唯一值，自定义，表示环境的名称
+          -->
     <environment id="development">
+      <!--
+               transactionManager：mybatis的事务类型
+                  type：JDBC（表示使用jdbc中的Connection对象的commit，rollback做事务处理）
+       -->
       <transactionManager type="JDBC"/>
-      <dataSource type="POOLED">
+
+      <!--
+            DataSource：数据源，连接数据库的
+                type：表示数据源的类型，POOLED表示使用连接池
+-->   <dataSource type="POOLED">
+
+      <!--
+                以下四个属性名不可自定义-->
+      <!--      数据库的驱动类名-->
         <property name="driver" value="${jdbc.driver}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.user}"/>
@@ -30,12 +49,24 @@
   
  
   <mappers>
-   
+
+    <!--    一个mapper标签指定一个文件的位置（可多个）
+        从类路径开始的路径信息。 target/classes(类路径)
+-->
       <package name="com.bjpowernode.crm.settings.dao"/>
       <package name="com.bjpowernode.crm.workbench.dao"/>
 <!--xml所在的包名，这个包中所有的xml文件一次性都能加载给mybatis，就可以使用SQL了-->
+
+<!--    UserDao.xml 里的的mapper ↓-->
+<!--    <mapper namespace="com.bjpowernode.crm.settings.dao.UserDao">-->
+<!--    在别处通过SqlSessionUtil 获取Mapper -->
+<!--private UserDao userDao = SqlSessionUtil.getSqlSession().getMapper(UserDao.class);-->
+
   </mappers>
 </configuration>
+<!--
+    mybatis的主配置文件，主要定义了数据库的配置信息，sql
+-->
 
 
 
