@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
+<script>
+    function getDetail() {
+        alert(11);
+
+        $.ajax({
+
+            url: "settings/user/detail.do",
+            data: {
+                "loginAct": 123,
+                "loginPwd": 123
+            },
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                alert(2)
+                if (data.success) {
+                    alert(22)
+                    window.location.href = "workbench/index.jsp";
+                } else {
+                    alert(444)
+                    $("#msg").html(data.msg);
+                }
+            }
+
+        })
+
+    }
+</script>
 <body>
-    what
+    <input type="button" value="aaa" onclick="getDetail()">
 </body>
 </html>

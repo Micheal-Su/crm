@@ -399,6 +399,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		.table-tr:hover{
 			background-color: #5e5e5e;
 		}
+
+		 .form-control{
+			 background-color: #5e5e5e;
+			 color: #e8ff2f;
+		 }
+
 	</style>
 
 </head>
@@ -589,7 +595,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <div class="form-group">
                                 <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                                 <div class="col-sm-10" style="width: 300px;">
-                                    <input type="text" class="form-control time" id="edit-nextContactTime" value="${c.nextContactTime}" readonly>
+                                    <input style="background-color: #5e5e5e" type="text" class="form-control time" id="edit-nextContactTime" value="${c.nextContactTime}" readonly>
                                 </div>
                             </div>
                         </div>

@@ -1,9 +1,14 @@
 package com.bjpowernode.crm.web.listener;
 
+import com.bjpowernode.crm.settings.dao.UserDao;
 import com.bjpowernode.crm.settings.domain.DicValue;
+import com.bjpowernode.crm.settings.domain.User;
 import com.bjpowernode.crm.settings.service.DicService;
+import com.bjpowernode.crm.settings.service.UserService;
 import com.bjpowernode.crm.settings.service.impl.DicServiceImpl;
+import com.bjpowernode.crm.settings.service.impl.UserServiceImpl;
 import com.bjpowernode.crm.utils.ServiceFactory;
+import com.bjpowernode.crm.utils.SqlSessionUtil;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -53,6 +58,12 @@ public class SysInitListener implements ServletContextListener {
             application.setAttribute(key,map.get(key));
 
         }
+        UserService us = (UserService)ServiceFactory.getService(new UserServiceImpl());
+        List<User> userList = us.getUserList();
+        for (User user : userList){
+            application.setAttribute(user.getDeptno(), user);
+        }
+
         System.out.println("服务器缓存处理数据字典结束");
 
                 /*

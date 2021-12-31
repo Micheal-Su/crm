@@ -364,6 +364,13 @@
 		}
 
 	</script>
+
+	<style>
+		.form-control{
+			background-color: #5e5e5e;
+			color: #e8ff2f;
+		}
+	</style>
 </head>
 <body style="background-color: #222222;">
 
@@ -404,12 +411,12 @@
 					<div class="form-group">
 						<label style="color: aqua" for="create-startTime" class="col-sm-2 control-label">开始日期</label>
 						<div class="col-sm-10" style="width: 300px;">
-							<input type="text" class="form-control time" id="create-startDate" readonly>
+							<input style="background-color: #5e5e5e" type="text" class="form-control time" id="create-startDate" readonly>
 							<%--防止乱填，可加入readonly，不过页面视觉效果不是很好--%>
 						</div>
 						<label style="color: aqua" for="create-endTime" class="col-sm-2 control-label">结束日期</label>
 						<div class="col-sm-10" style="width: 300px;">
-							<input type="text" class="form-control time" id="create-endDate" readonly>
+							<input style="background-color: #5e5e5e" type="text" class="form-control time" id="create-endDate" readonly>
 						</div>
 					</div>
 					<div class="form-group">
@@ -469,7 +476,7 @@
 					<div class="form-group">
 						<label style="color: aqua" for="edit-startTime" class="col-sm-2 control-label">开始日期</label>
 						<div class="col-sm-10" style="width: 300px;">
-							<input type="text" class="form-control time" id="edit-startDate">
+							<input style="background-color: #5e5e5e" type="text" class="form-control time" id="edit-startDate" readonly>
 						</div>
 						<label style="color: aqua" for="edit-endTime" class="col-sm-2 control-label">结束日期</label>
 						<div class="col-sm-10" style="width: 300px;">
@@ -559,9 +566,9 @@
 		</div>
 		<div class="btn-toolbar" role="toolbar" style="background-color: #222222; height: 50px; position: relative;top: 5px;">
 			<div  class="btn-group" style="position: relative; top: 18%;">
-				<button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span> 创建</button>
-				<button type="button" class="btn btn-default" id="editBtn"><span class="glyphicon glyphicon-pencil"></span> 修改</button>
-				<button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+				<button style="color: aqua;background-color: #222222" type="button" class="btn btn-primary" id="addBtn"><span style="color: aqua;" class="glyphicon glyphicon-plus"></span> 创建</button>
+				<button style="color: whitesmoke;background-color: #222222" type="button" class="btn btn-default" id="editBtn"><span style="color: whitesmoke" class="glyphicon glyphicon-pencil"></span> 修改</button>
+				<button style="color: #ff0966;background-color: #222222" type="button" class="btn btn-danger" id="deleteBtn"><span style="color:#ff0966" class="glyphicon glyphicon-minus"></span> 删除</button>
 			</div>
 
 		</div>

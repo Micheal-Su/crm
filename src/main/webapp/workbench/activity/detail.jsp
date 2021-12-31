@@ -36,10 +36,10 @@
                 pickerPosition: "bottom-left"
             });
 
-            $("#remark").focus(function(){
-                if(cancelAndSaveBtnDefault){
+            $("#remark").focus(function () {
+                if (cancelAndSaveBtnDefault) {
                     //设置remarkDiv的高度为130px
-                    $("#remarkDiv").css("height","130px");
+                    $("#remarkDiv").css("height", "130px");
                     //显示
                     $("#cancelAndSaveBtn").show("2000");
                     cancelAndSaveBtnDefault = false;
@@ -176,16 +176,11 @@
                     type:"post",
                     dataType:"json",
                     success:function (data){
-                        /*
-                            data
-                                {"success":true/false,"ar":{备注}}
-                         */
                         if (data.success){
-                            //修改备注成功后
-                            //更新div中相应的信息，需要更新的内容有 noteContent editTime editBy
+
                             $("#e"+id).html(data.ar.noteContent);
                             $("#s"+id).html(data.ar.editTime+" 由"+data.ar.editBy);
-                            //更新内容之后，关闭模态窗口
+
                             $("#editRemarkModal").modal("hide");
 
                         }else{
@@ -270,6 +265,13 @@
 
     </script>
 
+    <style>
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
+    </style>
+
 </head>
 <body style="background-color: #222222">
 
@@ -335,11 +337,11 @@
                     <div class="form-group">
                         <label style="color: aqua" for="edit-startTime" class="col-sm-2 control-label">开始日期</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time" readonly id="edit-startDate" value="${a.startDate}" >
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time" readonly id="edit-startDate" value="${a.startDate}" >
                         </div>
                         <label style="color: aqua" for="edit-endTime" class="col-sm-2 control-label">结束日期</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time" readonly id="edit-endDate" value="${a.endDate}" >
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time" readonly id="edit-endDate" value="${a.endDate}" >
                         </div>
                     </div>
 
@@ -357,11 +359,12 @@
                         </div>
                     </div>
 
+
                 </form>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-default " data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary" id="updateBtn" data-dismiss="modal">更新</button>
             </div>
         </div>
@@ -380,8 +383,8 @@
         <h3 style="color: whitesmoke">市场活动-${a.name} <small>${a.startDate} ~ ${a.endDate}</small></h3>
     </div>
     <div style="background-color: #222222; position: relative; height: 50px; width: 250px;  top: -72px; left: 700px;">
-        <button style="background-color: #dd21ff;color: #56ffca" type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
-        <button style="background-color: #1fe8ff; color: #222222" type="button" class="btn btn-danger" id="deleteBtn"><span style="color: #333333" class="glyphicon glyphicon-minus"></span> 删除</button>
+        <button style="border: black;background-color: #dd21ff;color: #56ffca" type="button" class="btn btn-default" data-toggle="modal" data-target="#editActivityModal"><span class="glyphicon glyphicon-edit"></span> 编辑</button>
+        <button style="border: black;background-color: #1fe8ff; color: #222222" type="button" class="btn btn-danger" id="deleteBtn"><span style="color: #333333" class="glyphicon glyphicon-minus"></span> 删除</button>
     </div>
 </div>
 
@@ -433,14 +436,15 @@
 </div>
 
 <!-- 备注 -->
-<div id="remarkBody" style="color: aqua ;position:relative; top: 30px; left: 40px;">
+<div id="remarkBody" style="color: aqua;position: relative; top: 20px; left: 40px;">
     <div class="page-header">
         <h4>备注</h4>
     </div>
 
     <div id="remarkDiv" style="background-color: #5e5e5e; width: 870px; height: 90px;">
         <form role="form" style="position: relative;top: 10px; left: 10px;">
-            <textarea id="remark" class="form-control" style="background-color: #9d9d9d;color: #c8e5bc; width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
+            <textarea id="remark" class="form-control" style="background-color: #9d9d9d;color: #c8e5bc;width: 850px; resize : none;" rows="2"
+                      placeholder="添加备注..."></textarea>
             <p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
                 <button id="cancelBtn" type="button" class="btn btn-default">取消</button>
                 <button id="saveRemarkBtn" type="button" class="btn btn-primary">保存</button>
@@ -448,6 +452,7 @@
         </form>
     </div>
 </div>
+
 <div style="height: 200px;"></div>
 </body>
 </html>

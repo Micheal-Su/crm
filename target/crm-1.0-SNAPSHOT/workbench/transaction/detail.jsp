@@ -662,6 +662,11 @@
         .table-tr:hover{
             background-color: #5e5e5e;
         }
+
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
     </style>
 
 </head>
@@ -707,7 +712,7 @@
                         <label for="edit-expectedClosingDate" class="col-sm-2 control-label">预计成交日期<span
                                 style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" readonly
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" readonly
                                    id="edit-expectedDate" value="${t.expectedDate}">
                         </div>
                     </div>
@@ -764,7 +769,7 @@
                                 class="glyphicon glyphicon-search" ></span></a></label>
                         <div class="col-sm-10" style="width: 300px;">
                             <!--提交的是id,不提交name-->
-                            <input type="text" class="form-control" readonly id="edit-activitySrc" value="${activityName}">
+                            <input style="background-color: #5e5e5e" type="text" class="form-control" readonly id="edit-activitySrc" value="${activityName}">
                             <!--选到看到的是name，本质提交的是id-->
                             <input type="hidden" id="edit-activityId" value="${t.activityId}">
                         </div>
@@ -789,7 +794,7 @@
                     <div class="form-group">
                         <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time2" readonly id="edit-nextContactTime"
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time2" readonly id="edit-nextContactTime"
                                    value="${t.nextContactTime}">
                         </div>
                     </div>

@@ -527,6 +527,11 @@
         .table-tr:hover{
             background-color: #5e5e5e;
         }
+
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
     </style>
 
 </head>
@@ -569,14 +574,14 @@
                         </div>
                         <label for="create-expectedClosingDate" class="col-sm-2 control-label">预计成交日期<span style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" readonly id="create-expectedDate">
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" readonly id="create-expectedDate">
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label for="create-accountName" class="col-sm-2 control-label">客户名称<span style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control" id="create-customerName"
+                            <input style="background-color: #5e5e5e" type="text" class="form-control" id="create-customerName"
                                    placeholder="支持自动补全，输入客户不存在则新建" readonly value="${c.customerName}">
                         </div>
 
@@ -641,7 +646,7 @@
                     <div class="form-group">
                         <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time2" readonly id="create-nextContactTime">
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time2" readonly id="create-nextContactTime">
                         </div>
                     </div>
                 </form>
@@ -789,7 +794,7 @@
                         </div>
                         <label for="edit-birth" class="col-sm-2 control-label">生日</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" id="edit-birth" value="${c.birth}" readonly>
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" id="edit-birth" value="${c.birth}" readonly>
                         </div>
                     </div>
 
@@ -821,7 +826,7 @@
                         <div class="form-group">
                             <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time2" id="edit-nextContactTime"
+                                <input style="background-color: #5e5e5e" type="text" class="form-control time2" id="edit-nextContactTime"
                                        value="${c.nextContactTime}" readonly>
                             </div>
                         </div>
