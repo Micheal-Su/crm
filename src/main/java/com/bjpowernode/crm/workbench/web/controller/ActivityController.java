@@ -39,6 +39,8 @@ public class ActivityController extends HttpServlet {
             pageList(request,response);
         }else if ("/workbench/activity/delete.do".equals(path)){
             delete(request,response);
+        }else if ("/workbench/activity/deleteInDetail.do".equals(path)){
+            deleteInDetail(request,response);
         }else if ("/workbench/activity/getUserListAndActivity.do".equals(path)){
             getUserListAndActivity(request,response);
         }else if ("/workbench/activity/update.do".equals(path)){
@@ -57,6 +59,14 @@ public class ActivityController extends HttpServlet {
             updateRemark(request,response);
         }
 
+    }
+
+    private void deleteInDetail(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到删除市场活动信息的操作");
+        String id = request.getParameter("activityId");
+        ActivityService as = (ActivityService) ServiceFactory.getService(new ActivityServiceImpl());
+        boolean flag = as.deleteInDetail(id);
+        PrintJson.printJsonFlag(response,flag);
     }
 
     private void getById(HttpServletRequest request, HttpServletResponse response) {

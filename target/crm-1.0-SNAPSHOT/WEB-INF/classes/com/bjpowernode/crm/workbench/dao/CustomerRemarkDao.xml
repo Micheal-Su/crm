@@ -46,6 +46,13 @@
             #{cid}
         </foreach>
     </select>
+
+    <select id="getCountByCid" resultType="int">
+        select count(*)
+        from tbl_customer_remark
+        where customerId=#{id}
+    </select>
+
     <delete id="deleteByCids">
         delete
         from tbl_customer_remark
@@ -53,6 +60,12 @@
         <foreach collection="array" item="cid" open="(" close=")" separator=",">
             #{cid}
         </foreach>
+    </delete>
+
+    <delete id="deleteByCid">
+        delete
+        from tbl_customer_remark
+        where customerId=#{id}
     </delete>
 </mapper>
 

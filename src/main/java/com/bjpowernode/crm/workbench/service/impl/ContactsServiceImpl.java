@@ -183,6 +183,83 @@ public class ContactsServiceImpl implements ContactsService {
         return flag;
     }
 
+    @Override
+    public boolean deleteInDetail(String id) {
+        contactsDao = SqlSessionUtil.getSqlSession().getMapper(ContactsDao.class);
+        boolean flag = true;
+
+        //查询出需要删除的备注的数量
+        int count1 = contactsRemarkDao.getCountByCid(id);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count2 = contactsRemarkDao.deleteByCid(id);
+
+        if (count1!=count2){
+            flag = false;
+        }
+
+        //查询出需要删除的交易的数量
+        int count3 = tranDao.getCountByContactsId(id);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count4 = tranDao.deleteByContactsId(id);
+
+        if (count3!=count4){
+            flag = false;
+        }
+
+        //      解除与市场活动的关联
+        int count5 = contactsActivityRelationDao.getCountByCid(id);
+        int count6 = contactsActivityRelationDao.unbundByCid(id);
+        if (count5!=count6){
+            flag = false;
+        }
+
+//        删除联系人本身
+        int count7 = contactsDao.deleteById(id);
+        if (count7!=1){
+            flag=false;
+        }
+        return flag;
+
+    }
+
+    @Override
+    public boolean saveRemark(ContactsRemark cr) {
+        boolean flag = true;
+        int count = contactsRemarkDao.save(cr);
+        if (count!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean deleteRemark(String id) {
+        boolean flag = true;
+        int count = contactsRemarkDao.deleteRemark(id);
+        if (count!=1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean updateRemark(ContactsRemark cr) {
+        boolean flag = true;
+        int count = contactsRemarkDao.updateRemark(cr);
+        if (count != 1){
+            flag=false;
+        }
+        return flag;
+    }
+
+    @Override
+    public List<ContactsRemark> getRemarkListByCid(String contactsId) {
+        List<ContactsRemark> crList = contactsRemarkDao.getListByContactsId(contactsId);
+        return crList;
+    }
+
 
     @Override
     public boolean update(Contacts c, String customerName) {

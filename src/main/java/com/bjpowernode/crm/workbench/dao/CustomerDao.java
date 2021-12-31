@@ -29,4 +29,5 @@ public interface CustomerDao {
 
     List<Tran> getTranListByCid(String customerId);
 
+    int deleteInDetail(String id);
 }

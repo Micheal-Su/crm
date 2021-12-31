@@ -100,8 +100,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 </script>
 
+	<style>
+		.form-control{
+			background-color: #5e5e5e;
+			color: #e8ff2f;
+		}
+	</style>
 </head>
-<body>
+<body style="background-color: #222222;color: aqua">
 	
 	<!-- 搜索市场活动的模态窗口 -->
 	<div class="modal fade" id="searchActivityModal" role="dialog" >
@@ -166,7 +172,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<input type="checkbox" id="isCreateTransaction"/>
 		为客户创建交易
 	</div>
-	<div id="create-transaction2" style="position: relative; left: 40px; top: 20px; width: 80%; background-color: #F7F7F7; display: none;" >
+	<div id="create-transaction2" style="background-color: #333333;color: #84fab0;position: relative; left: 40px; top: 20px; width: 80%; display: none;" >
 	
 		<form id="tranForm" action="workbench/clue/convert.do" method="post">
 			<input type="hidden" name="flag" value="a">
@@ -181,7 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  </div>
 		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
 		    <label for="expectedClosingDate">预计成交日期</label>
-		    <input type="text" class="form-control time" id="expectedClosingDate"name="expectedDate">
+		    <input style="background-color: #5e5e5e" type="text" class="form-control time" readonly id="expectedClosingDate"name="expectedDate">
 		  </div>
 		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
 		    <label for="stage">阶段</label>
@@ -194,7 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		  </div>
 		  <div class="form-group" style="width: 400px;position: relative; left: 20px;">
 		    <label for="activity">市场活动源&nbsp;&nbsp;<a href="javascript:void(0);" id="openSearchModalBtn" style="text-decoration: none;"><span class="glyphicon glyphicon-search"></span></a></label>
-		    <input type="text" class="form-control" id="activityName" placeholder="点击上面搜索" readonly>
+		    <input style="background-color: #5e5e5e" type="text" class="form-control" id="activityName" placeholder="点击上面搜索" readonly>
 			  <input type="hidden" id="activityId">
 		  </div>
 		</form>

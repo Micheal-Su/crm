@@ -37,6 +37,14 @@ public class ContactsController extends HttpServlet {
             save(request, response);
         } else if ("/workbench/contacts/pageList.do".equals(path)) {
             pageList(request, response);
+        } else if ("/workbench/contacts/saveRemark.do".equals(path)) {
+            saveRemark(request, response);
+        } else if ("/workbench/contacts/deleteRemark.do".equals(path)) {
+            deleteRemark(request, response);
+        } else if ("/workbench/contacts/updateRemark.do".equals(path)) {
+            updateRemark(request, response);
+        } else if ("/workbench/contacts/getRemarkListByCid.do".equals(path)) {
+            getRemarkListByCid(request, response);
         } else if ("/workbench/contacts/detail.do".equals(path)) {
             detail(request, response);
         } else if ("/workbench/contacts/getById.do".equals(path)) {
@@ -47,6 +55,8 @@ public class ContactsController extends HttpServlet {
             update(request, response);
         }else if ("/workbench/contacts/delete.do".equals(path)) {
             delete(request, response);
+        }else if ("/workbench/contacts/deleteInDetail.do".equals(path)) {
+            deleteInDetail(request, response);
         }else if ("/workbench/contacts/getCustomerName.do".equals(path)) {
             getCustomerName(request, response);
         }else if ("/workbench/contacts/bundTran.do".equals(path)) {
@@ -64,6 +74,75 @@ public class ContactsController extends HttpServlet {
         }else if ("/workbench/contacts/getActivityListByContactsId.do".equals(path)) {
             getActivityListByContactsId(request, response);
         }
+    }
+
+    private void getRemarkListByCid(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到根据交易id，取得备注信息列表");
+        String contactsId = request.getParameter("contactsId");
+        ContactsService cs = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        List<ContactsRemark> crList = cs.getRemarkListByCid(contactsId);
+        PrintJson.printJsonObj(response,crList);
+    }
+
+    private void updateRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到备注的修改操作");
+        String id = request.getParameter("id");
+        String noteContent = request.getParameter("noteContent");
+        String editTime = DateTimeUtil.getSysTime();
+        String editBy = ((User)request.getSession().getAttribute("user")).getName();
+        String editFlag = "1";
+        ContactsRemark cr = new ContactsRemark();
+        cr.setId(id);
+        cr.setNoteContent(noteContent);
+        cr.setEditTime(editTime);
+        cr.setEditBy(editBy);
+        cr.setEditFlag(editFlag);
+        ContactsService cs = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        boolean flag = cs.updateRemark(cr);
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("success",flag);
+        map.put("cr",cr);
+        PrintJson.printJsonObj(response,map);
+    }
+
+    private void deleteRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到删除备注操作");
+        String id = request.getParameter("id");
+        ContactsService cs = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        boolean flag = cs.deleteRemark(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
+    private void saveRemark(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到联系人详情页面的添加备注操作");
+        String noteContent = request.getParameter("noteContent");
+        String contactsId = request.getParameter("contactsId");
+        String id = UUIDUtil.getUUID();
+        String createTime = DateTimeUtil.getSysTime();
+        String createBy = ((User)request.getSession().getAttribute("user")).getName();
+        String editFlag = "0";
+        ContactsRemark cr = new ContactsRemark();
+        cr.setId(id);
+        cr.setNoteContent(noteContent);
+        cr.setContactsId(contactsId);
+        cr.setCreateTime(createTime);
+        cr.setCreateBy(createBy);
+        cr.setEditFlag(editFlag);
+
+        ContactsService cs = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        boolean flag = cs.saveRemark(cr);
+        Map<String,Object> map = new HashMap<String, Object>();
+        map.put("success",flag);
+        map.put("cr",cr);
+        PrintJson.printJsonObj(response,map);
+
+    }
+
+    private void deleteInDetail(HttpServletRequest request, HttpServletResponse response) {
+        String id = request.getParameter("contactsId");
+        ContactsService cs = (ContactsService) ServiceFactory.getService(new ContactsServiceImpl());
+        boolean flag = cs.deleteInDetail(id);
+        PrintJson.printJsonFlag(response,flag);
     }
 
     private void unbundActivity(HttpServletRequest request, HttpServletResponse response) {
@@ -158,8 +237,8 @@ public class ContactsController extends HttpServlet {
         t.setDescription(description);
         t.setContactSummary(contactSummary);
         t.setNextContactTime(nextContactTime);
-        TranService ts = (TranService) ServiceFactory.getService(new TranServiceImpl());
-        boolean flag = ts.save(t, customerName,contactsId);
+        TranService cs = (TranService) ServiceFactory.getService(new TranServiceImpl());
+        boolean flag = cs.save(t, customerName,contactsId);
 //        关联联系人和交易也在ts.save里处理了
         PrintJson.printJsonFlag(response, flag);
     }
@@ -176,8 +255,8 @@ public class ContactsController extends HttpServlet {
     private void getCustomerName(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("取得 客户名称列表（按照客户名进行模糊查询）");
         String name = request.getParameter("name");
-        CustomerService ts = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
-        List<Customer> cList = ts.getCustomerName(name);
+        CustomerService cs = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        List<Customer> cList = cs.getCustomerName(name);
         PrintJson.printJsonObj(response, cList);
     }
 
@@ -294,7 +373,7 @@ public class ContactsController extends HttpServlet {
         String appellation = request.getParameter("appellation");
         String email = request.getParameter("email");
         String mphone = request.getParameter("mphone");
-        String job = request.getParameter("mphone");
+        String job = request.getParameter("job");
         String birth = request.getParameter("birth");
         String createBy = ((User) request.getSession().getAttribute("user")).getName();
         String createTime = DateTimeUtil.getSysTime();

@@ -162,6 +162,29 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
+    public boolean deleteInDetail(String id) {
+        activityDao = SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
+        boolean flag = true;
+
+        //查询出需要删除的备注的数量
+        int count1 = activityRemarkDao.getCountByAid(id);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count2 = activityRemarkDao.deleteByAid(id);
+
+        if (count1!=count2){
+            flag = false;
+        }
+
+        //删除市场活动
+        int count3 = activityDao.deleteInDetail(id);
+        if (count3!= 1){
+            flag = false;
+        }
+        return flag;
+    }
+
+    @Override
     public List<Activity> getActivityListByNameAndNotByClueId(Map<String, String> map) {
         activityDao = SqlSessionUtil.getSqlSession().getMapper(ActivityDao.class);
         List<Activity> aList =activityDao.getActivityListByNameAndNotByClueId(map);

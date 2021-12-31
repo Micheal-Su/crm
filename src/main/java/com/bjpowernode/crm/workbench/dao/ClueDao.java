@@ -23,4 +23,6 @@ public interface ClueDao {
     List<Clue> getClueListByCondition(Map<String, Object> map);
 
     int update(Clue c);
+
+    int deleteInDetail(String id);
 }

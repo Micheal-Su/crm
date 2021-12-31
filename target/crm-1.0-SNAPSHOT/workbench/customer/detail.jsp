@@ -139,6 +139,28 @@
                 })
             })
 
+            $("#deleteBtn").click(function (){
+                if(confirm("确定要删除该客户吗？")){
+
+                    $.ajax({
+                        url:"workbench/customer/deleteInDetail.do",
+                        data: {
+                            "customerId":"${c.id}",
+                        },
+                        type:"post",
+                        dataType:"json",
+                        success:function (data){
+                            if (data.success){
+                                window.location.href="workbench/customer/index.jsp";
+                            }else {
+                                alert("删除客户失败")
+                            }
+                        }
+                    })
+                }
+            })
+
+
             //为保存按钮绑定事件
             $("#saveRemarkBtn").on("click", function () {
                 $.ajax({
@@ -161,8 +183,8 @@
                             html += '<div id="' + data.cr.id + '" class="remarkDiv" style="height: 60px;">';
                             html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
                             html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                            html += '<h5 id="e' + data.cr.id + '">' + data.cr.noteContent + '</h5>';
-                            html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${c.name}</b> <small style="color: gray;"> ' + (data.cr.createTime) + ' 由' + (data.cr.createBy) + '</small>';
+                            html += '<h5 style="color: aquamarine" id="e' + data.cr.id + '">' + data.cr.noteContent + '</h5>';
+                            html += '<font color="aqua">客户</font> <font color="aqua">-</font> <b>${c.name}</b> <small style="color: aqua;"> ' + (data.cr.createTime) + ' 由' + (data.cr.createBy) + '</small>';
                             html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
                             html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\'' + data.cr.id + '\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                             html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -264,6 +286,10 @@
                     alert("名称不能为空");
                     return false;
                 }
+               if ($("#createTran-stage").val() == "") {
+                    alert("交易阶段不能为空");
+                    return false;
+                }
                 $.ajax({
                     url: "workbench/customer/bundTran.do",
                     data: {
@@ -350,8 +376,8 @@
                         html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
                         html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
                         html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                        html += '<h5 id="e' + n.id + '">' + n.noteContent + '</h5>';
-                        html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${c.name}</b> <small style="color: gray;"id="s' + n.id + '"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + ' 由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
+                        html += '<h5 style="color: aquamarine" id="e' + n.id + '">' + n.noteContent + '</h5>';
+                        html += '<font color="aqua">客户</font> <font color="aqua">-</font> <b>${c.name}</b> <small style="color: aqua;"id="s' + n.id + '"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + ' 由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
                         html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
                         html += '<a class="myHref" href="javascript:void(0);"onclick="editRemark(\'' + n.id + '\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -379,15 +405,15 @@
 
                     var html = "";
                     $.each(data,function (i,n){
-                        html += '<tr>';
-                        html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id=' + n.id + '\';">' + n.name + '</a></td>';
+                        html += '<tr class="table-tr" >';
+                        html += '<td><a style="color: aquamarine; text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id=' + n.id + '\';">' + n.name + '</a></td>';
                         html += '<td>'+n.money+'</td>';
                         html += '<td>'+n.stage+'</td>';
                         //可以在控制层遍历tranList，给每一个根据stage赋予possibility，在前端就不会显得突兀了
                         html += '<td>'+n.possibility+'</td>';
                         html += '<td>'+n.expectedDate+'</td>';
                         html += '<td>'+n.type+'</td>';
-                        html += '<td><a href="javascript:void(0);" onclick="deleteTransaction(\''+n.id+'\')" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>删除</a></td>';
+                        html += '<td><a href="javascript:void(0);" onclick="deleteTransaction(\''+n.id+'\')" style="color: red;text-decoration: none;"><span style="color: red" class="glyphicon glyphicon-remove"></span>删除</a></td>';
                         html += '</tr>';
                     })
                     $("#tranBody").html(html);
@@ -400,7 +426,6 @@
                 $.ajax({
                     url: "workbench/customer/deleteTran.do",
                     data: {
-                        "customer": "${c.id}",
                         "transactionId": transactionId
                     },
                     type: "post",
@@ -428,11 +453,11 @@
                 success: function (data) {
                     var html = "";
                     $.each(data, function (i, n) {
-                        html += '<tr>';
-                        html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/contacts/detail.do?id=' + n.id + '\';">' + n.fullname + '</a></td>';
+                        html += '<tr class="table-tr">';
+                        html += '<td><a style="color: aquamarine;text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/contacts/detail.do?id=' + n.id + '\';">' + n.fullname + '</a></td>';
                         html += '<td>' + n.email + '</td>';
                         html += '<td>' + n.mphone + '</td>';
-                        html += '<td><a href="javascript:void(0);" onclick="deleteContacts(\'' + n.id + '\')" style="text-decoration: none;"><span class="glyphicon glyphicon-remove"></span>删除</a></td>';
+                        html += '<td><a href="javascript:void(0);" onclick="deleteContacts(\'' + n.id + '\')" style="color: red;text-decoration: none;"><span style="color: red" class="glyphicon glyphicon-remove"></span>删除</a></td>';
                         html += '</tr>';
                     })
                     $("#contactsBody").html(html);
@@ -494,18 +519,29 @@
         }
     </script>
 
+    <style>
+        .table-tr:hover{
+            background-color: #5e5e5e;
+        }
+
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
+    </style>
+
 </head>
-<body>
+<body style="background-color: #222222">
 
 <!-- 修改备注的模态窗口 -->
 <div class="modal fade" id="editRemarkModal" role="dialog">
     <%-- 备注的id --%>
     <input type="hidden" id="remarkId">
     <div class="modal-dialog" role="document" style="width: 40%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">修改备注</h4>
             </div>
@@ -530,10 +566,10 @@
 <!-- 删除联系人的模态窗口 -->
 <div class="modal fade" id="removeContactsModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 30%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title">删除联系人</h4>
             </div>
@@ -551,10 +587,10 @@
 <!-- 删除交易的模态窗口 -->
 <div class="modal fade" id="removeTransactionModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 30%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" onclick="$('#removeTransactionModal').modal('hide');">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title">删除交易</h4>
             </div>
@@ -572,10 +608,10 @@
 <!-- 创建交易的模态窗口 -->
 <div class="modal fade" id="createTransactionModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 90%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" onclick="$('#createTransactionModal').modal('hide');">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title">创建交易</h4>
             </div>
@@ -587,9 +623,8 @@
                                 style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="createTran-owner">
-                                <option></option>
                                 <c:forEach items="${customerUserList}" var="u">
-                                    <option value="${u.id}" ${c.owner eq u.name ? "selected" : ""}>${u.name}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${u.id}" ${c.owner eq u.name ? "selected" : ""}>${u.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -604,9 +639,9 @@
                         <div class="col-sm-10" style="width: 300px;">
                             <input type="text" class="form-control" id="createTran-name">
                         </div>
-                        <label for="create-expectedClosingDate" class="col-sm-2 control-label">预计成交日期<span style="font-size: 15px; color: red;">*</span></label>
+                        <label for="create-expectedClosingDate" class="col-sm-2 control-label">预计成交日期</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" readonly id="createTran-expectedDate">
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" readonly id="createTran-expectedDate">
                         </div>
                     </div>
 
@@ -614,9 +649,9 @@
                         <label for="create-transactionType" class="col-sm-2 control-label">类型</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="createTran-type">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${transactionTypeList}" var="t">
-                                    <option value="${t.value}">${t.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${t.value}">${t.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -624,9 +659,9 @@
                         <label for="create-transactionStage" class="col-sm-2 control-label">阶段<span style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="createTran-stage">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${stageList}" var="s">
-                                    <option value="${s.value}">${s.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${s.value}">${s.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -636,9 +671,9 @@
                         <label for="create-clueSource" class="col-sm-2 control-label">来源</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="createTran-source">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${sourceList}" var="s">
-                                    <option value="${s.value}">${s.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${s.value}">${s.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -680,7 +715,7 @@
                     <div class="form-group">
                         <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time2" readonly id="createTran-nextContactTime">
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time2" readonly id="createTran-nextContactTime">
                         </div>
                     </div>
                 </form>
@@ -700,7 +735,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title">查找联系人</h4>
             </div>
@@ -713,7 +748,7 @@
                         </div>
                     </form>
                 </div>
-                <table id="contactsTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
+                <table id="contactsTable" class="table" style="width: 900px; position: relative;top: 10px;">
                     <thead>
                     <tr style="color: #B3B3B3;">
                         <td><input type="checkbox"/></td>
@@ -738,10 +773,10 @@
 <!-- 创建联系人的模态窗口 -->
 <div class="modal fade" id="createContactsModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 85%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" onclick="$('#createContactsModal').modal('hide');">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title">创建联系人</h4>
             </div>
@@ -753,18 +788,18 @@
                                 style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="create-owner">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${customerUserList}" var="u">
-                                    <option value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
                         <label for="create-customerSource" class="col-sm-2 control-label">来源</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="create-source">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${sourceList}" var="s">
-                                    <option value="${s.value}">${s.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${s.value}">${s.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -779,9 +814,9 @@
                         <label for="create-call" class="col-sm-2 control-label">称呼</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="create-appellation">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${appellationList}" var="a">
-                                    <option value="${a.value}" }>${a.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${a.value}" }>${a.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -806,7 +841,7 @@
                         </div>
                         <label for="create-birth" class="col-sm-2 control-label">生日</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" readonly class="form-control time1" id="create-birth">
+                            <input style="background-color: #5e5e5e" type="text" readonly class="form-control time1" id="create-birth">
                         </div>
                     </div>
 
@@ -830,7 +865,7 @@
                         <div class="form-group">
                             <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time2" id="create-nextContactTime" readonly>
+                                <input style="background-color: #5e5e5e" type="text" class="form-control time2" id="create-nextContactTime" readonly>
                             </div>
                         </div>
                     </div>
@@ -859,10 +894,10 @@
 <!-- 修改客户的模态窗口 -->
 <div class="modal fade" id="editCustomerModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 85%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">修改客户</h4>
             </div>
@@ -875,7 +910,7 @@
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="edit-owner">
                                 <c:forEach items="${customerUserList}" var="u">
-                                    <option value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -917,7 +952,7 @@
                         <div class="form-group">
                             <label for="edit-nextContactTime2" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" readonly class="form-control time" id="edit-nextContactTime"
+                                <input style="background-color: #5e5e5e" type="text" readonly class="form-control time" id="edit-nextContactTime"
                                        value="${c.nextContactTime}">
                             </div>
                         </div>
@@ -946,55 +981,55 @@
 
 <!-- 返回按钮 -->
 <div style="position: relative; top: 35px; left: 10px;">
-    <a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left"
-                                                                         style="font-size: 20px; color: #DDDDDD"></span></a>
+    <a href="javascript:void(0);" onclick="window.location.href='workbench/customer/index.jsp';">
+        <span class="glyphicon glyphicon-arrow-left" style="font-size: 20px; color: #DDDDDD"></span></a>
 </div>
 
 <!-- 大标题 -->
 <div style="position: relative; left: 40px; top: -30px;">
-    <div class="page-header">
+    <div style="color: whitesmoke" class="page-header">
         <h3>${c.name} <small><a href="${c.website}" target="_blank">${c.website}</a></small></h3>
     </div>
-    <div style="position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
+    <div style="background-color: #222222;position: relative; height: 50px; width: 500px;  top: -72px; left: 700px;">
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editCustomerModal"><span
                 class="glyphicon glyphicon-edit"></span> 编辑
         </button>
-        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
     </div>
 </div>
 
 <!-- 详细信息 -->
-<div style="position: relative; top: -70px;">
+<div style="color: aquamarine ;position: relative; top: -70px;">
     <div style="position: relative; left: 40px; height: 30px;">
-        <div style="width: 300px; color: gray;">所有者</div>
+        <div style="width: 300px; color: aqua;">所有者</div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">名称</div>
+        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">名称</div>
         <div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${c.owner}</b></div>
         <div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${c.name}</b></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 10px;">
-        <div style="width: 300px; color: gray;">公司网站</div>
+        <div style="width: 300px; color: aqua;">公司网站</div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">公司座机</div>
+        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">公司座机</div>
         <div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${c.website}</b></div>
         <div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${c.phone}</b></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 20px;">
-        <div style="width: 300px; color: gray;">创建者</div>
+        <div style="width: 300px; color: aqua;">创建者</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${c.createBy}&nbsp;&nbsp;</b><small
-                style="font-size: 10px; color: gray;">${c.createTime}</small></div>
+                style="font-size: 10px; color: whitesmoke;">${c.createTime}</small></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 30px;">
-        <div style="width: 300px; color: gray;">修改者</div>
+        <div style="width: 300px; color: aqua;">修改者</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${c.editBy}&nbsp;&nbsp;</b><small
-                style="font-size: 10px; color: gray;">${c.editTime}</small></div>
+                style="font-size: 10px; color: whitesmoke;">${c.editTime}</small></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 40px;">
-        <div style="width: 300px; color: gray;">联系纪要</div>
+        <div style="width: 300px; color: aqua;">联系纪要</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 630px;position: relative; left: 200px; top: -20px;">
             <b>
@@ -1003,12 +1038,12 @@
         </div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 50px;">
-        <div style="width: 300px; color: gray;">下次联系时间</div>
+        <div style="width: 300px; color: aqua;">下次联系时间</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 300px;position: relative; left: 200px; top: -20px;"><b>${c.nextContactTime}</b></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 60px;">
-        <div style="width: 300px; color: gray;">描述</div>
+        <div style="width: 300px; color: aqua;">描述</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 630px;position: relative; left: 200px; top: -20px;">
             <b>
@@ -1017,7 +1052,7 @@
         </div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 70px;">
-        <div style="width: 300px; color: gray;">详细地址</div>
+        <div style="width: 300px; color: aqua;">详细地址</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 630px;position: relative; left: 200px; top: -20px;">
             <b>
@@ -1028,18 +1063,17 @@
 </div>
 
 <!-- 备注 -->
-<div id="remarkBody" style="position: relative; top: 40px; left: 40px;">
+<div id="remarkBody" style="color: aqua;position: relative; top: 40px; left: 40px;">
     <div class="page-header">
         <h4>备注</h4>
     </div>
 
-    <div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
+    <div id="remarkDiv" style="background-color: #5e5e5e; width: 870px; height: 90px;">
         <form role="form" style="position: relative;top: 10px; left: 10px;">
-            <textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"
-                      placeholder="添加备注..."></textarea>
+            <textarea id="remark" class="form-control" style="background-color: #9d9d9d;color: #c8e5bc;width: 850px; resize : none;" rows="2"  placeholder="添加备注..."></textarea>
             <p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
                 <button id="cancelBtn" type="button" class="btn btn-default">取消</button>
-                <button id="saveRemarkBtn" type="button" class="btn btn-primary">保存</button>
+                <button id="saveRemarkBtn" type="button"  class="btn btn-primary">保存</button>
             </p>
         </form>
     </div>
@@ -1047,12 +1081,12 @@
 
 <!-- 交易 -->
 <div>
-    <div style="position: relative; top: 20px; left: 40px;">
+    <div style="color: aqua;position: relative; top: 20px; left: 40px;">
         <div class="page-header">
             <h4>交易</h4>
         </div>
         <div style="position: relative;top: 0px;">
-            <table id="activityTable2" class="table table-hover" style="width: 900px;">
+            <table id="activityTable2" class="table" style="width: 900px;">
                 <thead>
                 <tr style="color: #B3B3B3;">
                     <td>名称</td>
@@ -1071,19 +1105,19 @@
         </div>
 
         <div>
-            <a href="javascript:void(0);" data-toggle="modal" data-target="#createTransactionModal" style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>新建交易</a>
+            <a href="javascript:void(0);" data-toggle="modal" data-target="#createTransactionModal" style="color: #a20fff;text-decoration: none;"><span style="color: #a20fff" class="glyphicon glyphicon-plus"></span>新建交易</a>
         </div>
     </div>
 </div>
 
 <!-- 联系人 -->
 <div>
-    <div style="position: relative; top: 20px; left: 40px;">
+    <div style="color: aqua;position: relative; top: 20px; left: 40px;">
         <div class="page-header">
             <h4>联系人</h4>
         </div>
         <div style="position: relative;top: 0px;">
-            <table id="activityTable" class="table table-hover" style="width: 900px;">
+            <table id="activityTable" class="table" style="width: 900px;">
                 <thead>
                 <tr style="color: #B3B3B3;">
                     <td>名称</td>
@@ -1100,7 +1134,7 @@
 
         <div>
             <a href="javascript:void(0);" data-toggle="modal" data-target="#createContactsModal"
-               style="text-decoration: none;"><span class="glyphicon glyphicon-plus"></span>新建联系人</a>
+               style="color: #a20fff; text-decoration: none;"><span style="color: #a20fff" class="glyphicon glyphicon-plus"></span>新建联系人</a>
         </div>
     </div>
 </div>

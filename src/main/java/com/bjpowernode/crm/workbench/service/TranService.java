@@ -37,4 +37,8 @@ public interface TranService {
     boolean updateRemark(TranRemark tr);
 
     boolean deleteRemark(String id);
+
+    boolean deleteInDetail(String id);
+
+    boolean deleteById(String tranId);
 }

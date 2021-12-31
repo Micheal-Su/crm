@@ -39,4 +39,10 @@ public interface ContactsDao {
     int deleteById(String customerId);
 
     Contacts getContactsByName(String contactsName);
+
+    int getNumByCusId(String id);
+
+    int getContactsNumByName(String contactsName);
+
+    Contacts getContactsByNameAndId(Contacts temCon);
 }

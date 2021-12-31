@@ -36,6 +36,12 @@
         </foreach>
     </select>
 
+    <select id="getCountByCid" resultType="int">
+        select count(*)
+        from tbl_clue_activity_relation
+        where clueId=#{id}
+    </select>
+
 
     <delete id="unbundByCids">
         delete
@@ -44,6 +50,12 @@
         <foreach collection="array" item="cid" open="(" close=")" separator=",">
             #{cid}
         </foreach>
+    </delete>
+
+    <delete id="unbundByCid">
+        delete
+        from tbl_clue_activity_relation
+        where clueId=#{id}
     </delete>
 
 </mapper>

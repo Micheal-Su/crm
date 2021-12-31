@@ -13,4 +13,8 @@ public interface TranHistoryDao {
     int getCountByTids(String[] ids);
 
     int deleteByTids(String[] ids);
+
+    int getCountByTid(String id);
+
+    int deleteByTid(String id);
 }

@@ -42,6 +42,12 @@
         </foreach>
     </delete>
 
+    <delete id="deleteInDetail">
+        delete
+        from tbl_customer
+        where id=#{id}
+    </delete>
+
     <select id="getTotalByCondition" resultType="Integer">
         select count(*)
         from tbl_customer c

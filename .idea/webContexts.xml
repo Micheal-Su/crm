@@ -3,6 +3,8 @@
   <component name="WebContextManager">
     <option name="state">
       <map>
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/login.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/productor.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/activity/detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/activity" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/activity/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/activity" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/clue/detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/clue" />
@@ -10,6 +12,11 @@
         <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/contacts/detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/contacts" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/contacts/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/contacts" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/customer/detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/customer" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/dispatchBill/index.html" value="file://$PROJECT_DIR$/src/main/webapp/workbench/dispatchBill" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/dispatchBill/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/dispatchBill" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/product/index.jsp" value="file://$PROJECT_DIR$/src/main/webapp" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/product/product.html" value="file://$PROJECT_DIR$/src/main/webapp/workbench/product" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/product/跟进.html" value="file://$PROJECT_DIR$/src/main/webapp/workbench/product" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/transaction/detail.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/transaction" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/workbench/transaction/save.jsp" value="file://$PROJECT_DIR$/src/main/webapp/workbench/transaction" />
       </map>

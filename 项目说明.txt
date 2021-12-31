@@ -1,12 +1,20 @@
 2021/10/24
 本项目使用到的知识
-Html Css Js; Ajax Jquery Jsp
+Html Css Js; Ajax（局部刷新） Jquery  Jsp
 Tomcat-Servlet Maven Mybatis(没涉及spring和springmvc)
 
+小知识点：
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+实现代码复用：
+例如：
+<c:forEach items="${stageList}" var="s">
+    <option style="background-color: #333333;color:aquamarine" value="${s.value}" ${t.stage eq s.value ? "selected" : ""}>${s.text}</option>
+</c:forEach>
 
 我发现的问题：
   1. 选中的复选框在点击到别的页的时候会被取消（不知道算不算正常）
   2. 前端各种分割线文字位置乱七八糟，没对齐(已自己解决)
+  3. 有时候关联数据被删除时，前端会出现null字样(通过 X.setXXX(""),设置为空字符可以解决)
 
 
 -----------------------------------------------

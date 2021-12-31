@@ -28,18 +28,18 @@ public class UserServiceImpl implements UserService {
         }
         //如果到此，说明账号密码正确，继续向下验证
 
-//        //验证失效时间
-//        String expireTime = user.getExpireTime();
-//        String currentTime = DateTimeUtil.getSysTime();
-////        if (expireTime.compareTo(currentTime)<0){
-////            throw new LoginException("账号已失效");
-////        }
-//        //判断锁定状态
-//        String lockState = user.getLockState();
-//        if("0".equals(lockState)){
-//            throw new LoginException("账号已锁定");
-//        }
-//        //判断ip地址
+        //验证失效时间
+        String expireTime = user.getExpireTime();
+        String currentTime = DateTimeUtil.getSysTime();
+        if (expireTime.compareTo(currentTime)<0){
+            throw new LoginException("账号已失效");
+        }
+        //判断锁定状态
+        String lockState = user.getLockState();
+        if("0".equals(lockState)){
+            throw new LoginException("账号已锁定");
+        }
+        //判断ip地址
 //        String allowIps = user.getAllowIps();
 //        if (!allowIps.contains(ip)){
 //            throw new LoginException("ip地址受限");

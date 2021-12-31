@@ -149,13 +149,9 @@ public class CustomerServiceImpl implements CustomerService {
         if (count7!=1){
             flag=false;
         }
-
 //        删除所有包含该客户的联系人中的客户信息
         int count5 = contactsDao.getTheCusCount(ids);
         int count6 = contactsDao.deletesByCusId(ids);
-
-        System.out.println("删除客户信息成功\n\n\n\n\n\n\n");
-
         if (count5!=count6){
             flag = false;
         }
@@ -198,6 +194,50 @@ public class CustomerServiceImpl implements CustomerService {
         customerDao = SqlSessionUtil.getSqlSession().getMapper(CustomerDao.class);
         List<Tran> tranList = customerDao.getTranListByCid(customerId);
         return tranList;
+    }
+
+    @Override
+    public boolean deleteInDetail(String id) {
+        customerDao = SqlSessionUtil.getSqlSession().getMapper(CustomerDao.class);
+        boolean flag = true;
+//      ids:复选框选中的id
+
+        //查询出需要删除的备注的数量
+        int count1 = customerRemarkDao.getCountByCid(id);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count2 = customerRemarkDao.deleteByCid(id);
+
+        if (count1!=count2){
+            flag = false;
+        }
+
+//      删除交易
+        //查询出需要删除的交易的数量
+        int count3 = tranDao.getCountByCusId(id);
+
+        //删除备注，返回收到影响的条数（实际删除的条数）
+        int count4 = tranDao.deleteByCusId(id);
+
+        if (count3!=count4){
+            flag = false;
+        }
+
+//       删了别的忘了删自己。。。。
+        int count7 = customerDao.deleteInDetail(id);
+        if (count7!=1){
+            flag=false;
+        }
+
+//        删除所有包含该客户的联系人中的客户信息
+        int count5 = contactsDao.getNumByCusId(id);
+        int count6 = contactsDao.deleteByCusId(id);
+
+        if (count5!=count6){
+            flag = false;
+        }
+        return flag;
+
     }
 
 }

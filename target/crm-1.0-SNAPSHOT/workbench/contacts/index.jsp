@@ -83,7 +83,7 @@
                     success: function (data) {
                         var html;
                         $.each(data, function (i, n) {
-                            html += "<option value='" + n.id + "'>" + n.name + "</option>";
+                            html += "<option style='background-color: #333333;color: aquamarine' value='" + n.id + "'>" + n.name + "</option>";
                         })
                         $("#create-owner").html(html);
                         var id = "${user.id}";
@@ -182,7 +182,7 @@
                         success: function (data) {
                             var html;
                             $.each(data.contactsUserList, function (i, n) {
-                                html += "<option value='" + n.id + "'>" + n.name + "</option>"
+                                html += "<option style='background-color: #333333;color: aquamarine' value='" + n.id + "'>" + n.name + "</option>"
                             })
                             $("#edit-owner").html(html);
                             $("#edit-id").val(data.c.id);
@@ -314,12 +314,12 @@
                     var html = "";
                     $.each(data.dataList, function (i, n) {
                         html += '<tr class="active">';
-                        html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
-                        html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/contacts/detail.do?id=' + n.id + '\';">' + n.fullname + '</a></td>';
-                        html += '<td>' + n.customerName + '</td>';
-                        html += '<td>' + n.owner + '</td>';
-                        html += '<td>' + n.source + '</td>';
-                        html += '<td>' + n.birth + '</td>';
+                        html += '<td style="background-color: #5e5e5e"><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
+                        html += '<td style="background-color: #5e5e5e"><a style="color: aquamarine ;text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/contacts/detail.do?id=' + n.id + '\';">' + n.fullname + '</a></td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.customerName + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.owner + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.source + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.birth + '</td>';
                         html += '</tr>';
 
                     })
@@ -353,8 +353,15 @@
             })
         }
     </script>
+
+    <style>
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: #222222;">
 <input type="hidden" id="hidden-fullname"/>
 <input type="hidden" id="hidden-customerName"/>
 <input type="hidden" id="hidden-birth"/>
@@ -364,10 +371,10 @@
 <!-- 创建联系人的模态窗口 -->
 <div class="modal fade" id="createContactsModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 85%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: #0af4ff" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabelx">创建联系人</h4>
             </div>
@@ -385,9 +392,9 @@
                         <label for="create-contactsSource" class="col-sm-2 control-label">来源</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="create-source">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${sourceList}" var="s">
-                                    <option value="${s.value}">${s.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${s.value}">${s.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -402,9 +409,9 @@
                         <label for="create-call" class="col-sm-2 control-label">称呼</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="create-appellation">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${appellationList}" var="a">
-                                    <option value="${a.value}">${a.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${a.value}">${a.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -429,7 +436,7 @@
                         </div>
                         <label for="create-birth" class="col-sm-2 control-label">生日</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" id="create-birth" readonly>
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" id="create-birth" readonly>
                         </div>
                     </div>
 
@@ -461,7 +468,7 @@
                         <div class="form-group">
                             <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time2" id="create-nextContactTime" readonly>
+                                <input style="background-color: #5e5e5e" type="text" class="form-control time2" id="create-nextContactTime" readonly>
                             </div>
                         </div>
                     </div>
@@ -490,10 +497,10 @@
 <!-- 修改联系人的模态窗口 -->
 <div class="modal fade" id="editContactsModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 85%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: #0af4ff" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">修改联系人</h4>
             </div>
@@ -512,9 +519,9 @@
                         <label for="edit-contactsSource1" class="col-sm-2 control-label">来源</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="edit-source">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${sourceList}" var="s">
-                                    <option value="${s.value}" ${c.source eq s.value ? "selected" : ""}>${s.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${s.value}" ${c.source eq s.value ? "selected" : ""}>${s.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -529,9 +536,9 @@
                         <label for="edit-call" class="col-sm-2 control-label">称呼</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="edit-appellation">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${appellationList}" var="a">
-                                    <option value="${a.value}" ${c.appellation eq a.value ? "selected" : ""}>${a.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${a.value}" ${c.appellation eq a.value ? "selected" : ""}>${a.text}</option>
                                 </c:forEach><
                             </select>
                         </div>
@@ -555,7 +562,7 @@
                         </div>
                         <label for="edit-birth" class="col-sm-2 control-label">生日</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" id="edit-birth" readonly>
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" id="edit-birth" readonly>
                         </div>
                     </div>
 
@@ -587,7 +594,7 @@
                         <div class="form-group">
                             <label for="create-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                             <div class="col-sm-10" style="width: 300px;">
-                                <input type="text" class="form-control time2" id="edit-nextContactTime" readonly>
+                                <input style="background-color: #5e5e5e" type="text" class="form-control time2" id="edit-nextContactTime" readonly>
                             </div>
                         </div>
                     </div>
@@ -615,7 +622,7 @@
 
 <div>
     <div style="position: relative; left: 10px; top: -10px;">
-        <div class="page-header">
+        <div style="color: whitesmoke" class="page-header">
             <h3>联系人列表</h3>
         </div>
     </div>
@@ -630,22 +637,22 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">所有者</div>
-                        <input class="form-control" type="text" id="search-owner">
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">所有者</div>
+                        <input style="color: whitesmoke;background-color: #222222" class="form-control" type="text" id="search-owner">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">姓名</div>
-                        <input class="form-control" type="text" id="search-fullname">
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">姓名</div>
+                        <input style="color: whitesmoke;background-color: #222222" class="form-control" type="text" id="search-fullname">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">客户名称</div>
-                        <input class="form-control" type="text" id="search-customerName">
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">客户名称</div>
+                        <input style="color: whitesmoke;background-color: #222222" class="form-control" type="text" id="search-customerName">
                     </div>
                 </div>
 
@@ -653,11 +660,11 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">来源</div>
-                        <select class="form-control" id="search-source">
-                            <option></option>
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">来源</div>
+                        <select style="color: whitesmoke;background-color: #222222" class="form-control" id="search-source">
+                            <option style="color: whitesmoke;background-color: #222222"></option>
                             <c:forEach items="${sourceList}" var="s">
-                                <option value="${s.value}" ${c.source eq s.value ? "selected" : ""}>${s.text}</option>
+                                <option style="color: whitesmoke;background-color: #222222" value="${s.value}" ${c.source eq s.value ? "selected" : ""}>${s.text}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -665,27 +672,22 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">生日</div>
-                        <input class="form-control time1" type="text" id="search-birth">
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">生日</div>
+                        <input style="color: whitesmoke;background-color: #222222" class="form-control time1" type="text" id="search-birth">
                     </div>
                 </div>
 
-                <button type="button" id="searchBtn" class="btn btn-default">查询</button>
+                <button style="color: whitesmoke;background-color: #222222" type="button" id="searchBtn" class="btn btn-default">查询</button>
 
             </form>
         </div>
         <div class="btn-toolbar" role="toolbar"
-             style="background-color: #F7F7F7; height: 50px; position: relative;top: 10px;">
+             style="background-color: #222222; height: 50px; position: relative;top: 10px;">
             <div class="btn-group" style="position: relative; top: 18%;">
-                <button type="button" class="btn btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus"></span>
-                    创建
-                </button>
-                <button type="button" class="btn btn-default" id="editBtn"><span
-                        class="glyphicon glyphicon-pencil"></span> 修改
-                </button>
-                <button type="button" id="deleteBtn" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+                <button style="color: aqua;background-color: #222222" type="button" class="btn btn-primary" id="addBtn"><span style="color: aqua;" class="glyphicon glyphicon-plus"></span> 创建</button>
+                <button style="color: whitesmoke;background-color: #222222" type="button" class="btn btn-default" id="editBtn"><span style="color: whitesmoke" class="glyphicon glyphicon-pencil"></span> 修改</button>
+                <button style="color: #ff0966;background-color: #222222" type="button" class="btn btn-danger" id="deleteBtn"><span style="color:#ff0966" class="glyphicon glyphicon-minus"></span> 删除</button>
             </div>
-
 
         </div>
         <div style="position: relative;top: 20px;">
@@ -707,7 +709,7 @@
         </div>
 
         <div style="height: 50px; position: relative;top: 30px;">
-            <div id="contactsPage"></div>
+            <div style="background-color: #222222; color: whitesmoke" id="contactsPage"></div>
 
         </div>
 

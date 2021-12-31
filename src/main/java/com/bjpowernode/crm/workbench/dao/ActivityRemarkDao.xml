@@ -12,6 +12,14 @@
                 #{aid}
           </foreach>
      </select>
+
+    <select id="getCountByAid" resultType="int">
+        select count(*)
+        from tbl_activity_remark
+        where activityId=#{id}
+
+    </select>
+
      <delete id="deleteByAids">
           delete
           from tbl_activity_remark
@@ -20,6 +28,12 @@
           #{aid}
           </foreach>
      </delete>
+
+    <delete id="deleteByAid">
+        delete
+        from tbl_activity_remark
+        where activityId=#{id}
+    </delete>
 
      <select id="getRemarkListByAid" resultType="ActivityRemark">
              select * from tbl_activity_remark where activityId = #{activityId}

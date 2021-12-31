@@ -40,8 +40,6 @@
     <base href="<%=basePath%>">
     <meta charset="UTF-8">
 
-    <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
-
     <style type="text/css">
         .mystage {
             font-size: 20px;
@@ -56,14 +54,14 @@
         }
     </style>
 
-    <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
-    <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
+    <link href="jquery/bootstrap_3.3.0/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <link href="jquery/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css" type="text/css" rel="stylesheet" />
 
     <script type="text/javascript" src="jquery/jquery-1.11.1-min.js"></script>
     <script type="text/javascript" src="jquery/bootstrap_3.3.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
-    <script type="text/javascript"
-            src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="jquery/bootstrap-datetimepicker-master/locale/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="jquery/bs_typeahead/bootstrap3-typeahead.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="jquery/bs_pagination/jquery.bs_pagination.min.css">
     <script type="text/javascript" src="jquery/bs_pagination/jquery.bs_pagination.min.js"></script>
@@ -88,7 +86,7 @@
         $(function () {
             $(".time1").datetimepicker({
                 minView: "month",
-                language: 'zh-CN',
+                language:  'zh-CN',
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayBtn: true,
@@ -96,7 +94,7 @@
             });
             $(".time2").datetimepicker({
                 minView: "month",
-                language: 'zh-CN',
+                language:  'zh-CN',
                 format: 'yyyy-mm-dd',
                 autoclose: true,
                 todayBtn: true,
@@ -176,8 +174,6 @@
             });
 
 
-
-
             $("#updateBtn").click(function () {
                 if($("#edit-name").val() == ""){
                     alert("名称不能为空");
@@ -234,6 +230,28 @@
                 })
             })
 
+            $("#deleteBtn").click(function (){
+                if(confirm("确定要删除该交易吗？")){
+
+                    $.ajax({
+                        url:"workbench/transaction/deleteInDetail.do",
+                        data: {
+                            "tranId":"${t.id}",
+                        },
+                        type:"post",
+                        dataType:"json",
+                        success:function (data){
+                            if (data.success){
+                                window.location.href="workbench/transaction/index.jsp";
+                            }else {
+                                alert("删除线索失败")
+                            }
+                        }
+                    })
+                }
+            })
+
+
             //为保存按钮绑定事件
             $("#saveRemarkBtn").on("click", function () {
                 $.ajax({
@@ -241,7 +259,6 @@
                     data: {
                         "noteContent": $.trim($("#remark").val()),
                         "tranId": "${t.id}"
-                        //	在detail.do中已经将c保存在请求域中了
                     },
                     type: "post",
                     dataType: "json",
@@ -250,14 +267,13 @@
                         if (data.success) {
                             //将textarea中内容清空
                             $("#remark").val("");
-                            // alert("添加备注成功");
                             //在textarea文本域上方新增一个div
                             var html = "";
                             html += '<div id="' + data.tr.id + '" class="remarkDiv" style="height: 60px;">';
                             html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
                             html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                            html += '<h5 id="e' + data.tr.id + '">' + data.tr.noteContent + '</h5>';
-                            html += '<font color="gray">市场活动</font> <font color="gray">-</font> <b>${t.customerName}-${t.name}</b> <small style="color: gray;"> ' + (data.tr.createTime) + ' 由' + (data.tr.createBy) + '</small>';
+                            html += '<h5 style="color: aquamarine" id="e' + data.tr.id + '">' + data.tr.noteContent + '</h5>';
+                            html += '<font color="aqua">交易</font> <font color="aqua">-</font> <b>${t.customerName}-${t.name}</b> <small style="color: aqua;"> ' + (data.tr.createTime) + ' 由' + (data.tr.createBy) + '</small>';
                             html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
                             html += '<a class="myHref" href="javascript:void(0);" onclick="editRemark(\'' + data.tr.id + '\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                             html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -377,7 +393,7 @@
                                 html += '<td><input type="checkbox" name="cxz" value="'+n.id+'"/></td>'
                                 html += '<td>'+n.fullname+'</td>'
                                 html += '<td>'+n.email+'</td>'
-                                html += '<td>'+n.phone+'</td>'
+                                html += '<td>'+n.mphone+'</td>'
                                 html += '</tr>'
                             })
                             $("#contactsSearchBody").html(html);
@@ -430,8 +446,8 @@
                         html += '<div id="' + n.id + '" class="remarkDiv" style="height: 60px;">';
                         html += '<img title="zhangsan" src="image/user-thumbnail.png" style="width: 30px; height:30px;">';
                         html += '<div style="position: relative; top: -40px; left: 40px;" >';
-                        html += '<h5 id="e' + n.id + '">' + n.noteContent + '</h5>';
-                        html += '<font color="gray">交易</font> <font color="gray">-</font> <b>${t.customerName}-${t.name}</b> <small style="color: gray;"id="s' + n.id + '"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + ' 由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
+                        html += '<h5 style="color: aquamarine" id="e' + n.id + '">' + n.noteContent + '</h5>';
+                        html += '<font color="aqua">交易</font> <font color="aqua">-</font> <b>${t.customerName}-${t.name}</b> <small style="color: aqua;"id="s' + n.id + '"> ' + (n.editFlag == 0 ? n.createTime : n.editTime) + ' 由' + (n.editFlag == 0 ? n.createBy : n.editBy) + '</small>';
                         html += '<div style="position: relative; left: 500px; top: -30px; height: 30px; width: 100px; display: none;">';
                         html += '<a class="myHref" href="javascript:void(0);"onclick="editRemark(\'' + n.id + '\')"><span class="glyphicon glyphicon-edit" style="font-size: 20px; color: #FF0000;"></span></a>';
                         html += '&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -458,7 +474,7 @@
                 success: function (data) {
                     var html = "";
                     $.each(data, function (i, n) {
-                        html += '<tr>';
+                        html += '<tr class="table-tr">';
                         html += '<td>' + n.stage + '</td>';
                         html += '<td>' + n.money + '</td>';
                         html += '<td>' + n.possibility + '</td>';
@@ -532,7 +548,7 @@
                     //添加新样式
                     $("#" + i).addClass("glyphicon glyphicon-record mystage")
                     //为新样式赋予颜色
-                    $("#" + i).css("color", "#000000");
+                    $("#" + i).css("color", "#ffffff");
                 }
                 for (var i = point; i <<%=dvList.size()%>; i++) {
                     //如果是当前阶段
@@ -551,7 +567,7 @@
                         //添加新样式
                         $("#" + i).addClass("glyphicon glyphicon-remove mystage")
                         //为新样式赋予颜色
-                        $("#" + i).css("color", "#000000");
+                        $("#" + i).css("color", "#ffffff");
 
                     }
                 }
@@ -590,7 +606,7 @@
                         //添加新样式
                         $("#" + i).addClass("glyphicon glyphicon-record mystage")
                         //为新样式赋予颜色
-                        $("#" + i).css("color", "#000000");
+                        $("#" + i).css("color", "#ffffff");
 
                     }
                 }
@@ -601,7 +617,7 @@
                     //添加新样式
                     $("#" + i).addClass("glyphicon glyphicon-record mystage")
                     //为新样式赋予颜色
-                    $("#" + i).css("color", "#000000");
+                    $("#" + i).css("color", "#ffffff");
 
                 }
 
@@ -640,21 +656,28 @@
             })
         }
 
-
     </script>
 
+    <style>
+        .table-tr:hover{
+            background-color: #5e5e5e;
+        }
+
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
+    </style>
+
 </head>
-<body>
-
-
-
+<body style="background-color: #222222">
 <!-- 修改交易的模态窗口 -->
 <div class="modal fade" id="editTranModal" role="dialog">
     <div class="modal-dialog" role="document" style="width: 90%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">修改交易信息</h4>
             </div>
@@ -667,7 +690,7 @@
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="edit-owner">
                                 <c:forEach items="${tranUserList}" var="u">
-                                    <option value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${u.id}" ${user.id eq u.id ? "selected" : ""}>${u.name}</option>
                                 </c:forEach>
 
                             </select>
@@ -689,7 +712,7 @@
                         <label for="edit-expectedClosingDate" class="col-sm-2 control-label">预计成交日期<span
                                 style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time1" readonly
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time1" readonly
                                    id="edit-expectedDate" value="${t.expectedDate}">
                         </div>
                     </div>
@@ -699,15 +722,15 @@
                                 class="glyphicon glyphicon-search"></span></a></label>
                         <div class="col-sm-10" style="width: 300px;">
                             <input type="text" class="form-control" id="edit-contactsName" value="${t.contactsName}">
-                            <input type="hidden" id="edit-contactsId">
+                            <input type="hidden" id="edit-contactsId" value="${t.contactsId}">
                         </div>
                         <label for="edit-transactionStage" class="col-sm-2 control-label">阶段<span
                                 style="font-size: 15px; color: red;">*</span></label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="edit-stage">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${stageList}" var="s">
-                                    <option value="${s.value}" ${t.stage eq s.value ? "selected" : ""}>${s.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${s.value}" ${t.stage eq s.value ? "selected" : ""}>${s.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -717,9 +740,9 @@
                         <label for="edit-transactionType" class="col-sm-2 control-label">类型</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="edit-type">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${transactionTypeList}" var="tran">
-                                    <option value="${tran.value}" ${t.type eq tran.value ? "selected" : ""}>${tran.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${tran.value}" ${t.type eq tran.value ? "selected" : ""}>${tran.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -734,9 +757,9 @@
                         <label for="edit-clueSource" class="col-sm-2 control-label">来源</label>
                         <div class="col-sm-10" style="width: 300px;">
                             <select class="form-control" id="edit-source">
-                                <option></option>
+                                <option style="background-color: #333333;color:aquamarine"></option>
                                 <c:forEach items="${sourceList}" var="s">
-                                    <option value="${s.value}" ${t.source eq s.value ? "selected" : ""}>${s.text}</option>
+                                    <option style="background-color: #333333;color:aquamarine" value="${s.value}" ${t.source eq s.value ? "selected" : ""}>${s.text}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -746,7 +769,7 @@
                                 class="glyphicon glyphicon-search" ></span></a></label>
                         <div class="col-sm-10" style="width: 300px;">
                             <!--提交的是id,不提交name-->
-                            <input type="text" class="form-control" readonly id="edit-activitySrc" value="${activityName}">
+                            <input style="background-color: #5e5e5e" type="text" class="form-control" readonly id="edit-activitySrc" value="${activityName}">
                             <!--选到看到的是name，本质提交的是id-->
                             <input type="hidden" id="edit-activityId" value="${t.activityId}">
                         </div>
@@ -771,7 +794,7 @@
                     <div class="form-group">
                         <label for="edit-nextContactTime" class="col-sm-2 control-label">下次联系时间</label>
                         <div class="col-sm-10" style="width: 300px;">
-                            <input type="text" class="form-control time2" readonly id="edit-nextContactTime"
+                            <input style="background-color: #5e5e5e" type="text" class="form-control time2" readonly id="edit-nextContactTime"
                                    value="${t.nextContactTime}">
                         </div>
                     </div>
@@ -786,13 +809,13 @@
     </div>
 </div>
 
-<!-- 查找市场活动 -->
+<!-- 查找市场活动模态窗口 -->
 <div class="modal fade" id="findMarketActivity" role="dialog">
     <div class="modal-dialog" role="document" style="width: 80%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title">查找市场活动</h4>
             </div>
@@ -805,7 +828,7 @@
                         </div>
                     </form>
                 </div>
-                <table id="activityTable3" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
+                <table id="activityTable3" class="table" style="width: 900px; position: relative;top: 10px;">
                     <thead>
                     <tr style="color: #B3B3B3;">
                         <td></td>
@@ -831,10 +854,10 @@
 <%--查找联系人模态窗口--%>
 <div class="modal fade" id="findContacts" role="dialog">
     <div class="modal-dialog" role="document" style="width: 80%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine" aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title">查找联系人</h4>
             </div>
@@ -847,7 +870,7 @@
                         </div>
                     </form>
                 </div>
-                <table id="contactsTable" class="table table-hover" style="width: 900px; position: relative;top: 10px;">
+                <table id="contactsTable" class="table" style="width: 900px; position: relative;top: 10px;">
                     <thead>
                     <tr style="color: #B3B3B3;">
                         <td></td>
@@ -874,10 +897,10 @@
     <%-- 备注的id --%>
     <input type="hidden" id="remarkId">
     <div class="modal-dialog" role="document" style="width: 40%;">
-        <div class="modal-content">
+        <div style="background-color: rgba(41, 45, 62, .8);color: aqua" class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
+                    <span style="color: aquamarine"  aria-hidden="true">×</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel1">修改备注</h4>
             </div>
@@ -901,12 +924,12 @@
 
 <!-- 返回按钮 -->
 <div style="position: relative; top: 35px; left: 10px;">
-    <a href="javascript:void(0);" onclick="window.history.back();"><span class="glyphicon glyphicon-arrow-left"
+    <a href="javascript:void(0);" onclick="window.location.href='workbench/transaction/index.jsp';"><span class="glyphicon glyphicon-arrow-left"
                                                                          style="font-size: 20px; color: #DDDDDD"></span></a>
 </div>
 
 <!-- 大标题 -->
-<div style="position: relative; left: 40px; top: -30px;">
+<div style="color: whitesmoke;position: relative; left: 40px; top: -30px;">
     <div class="page-header">
         <h3>${t.name}-${t.customerName} <small>-${t.money}</small></h3>
     </div>
@@ -914,13 +937,13 @@
         <button type="button" class="btn btn-default" data-toggle="modal" data-target="#editTranModal"><span
                 class="glyphicon glyphicon-edit"></span> 编辑
         </button>
-        <button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+        <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
     </div>
 </div>
 
 <!-- 阶段状态 -->
 <%--jsp中用不了El表达式，只能再取request中的数据--%>
-<div style="position: relative; left: 40px; top: -50px;">
+<div style="color: #a20fff;position: relative; left: 40px; top: -50px;">
     阶段&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <%
         //准备当前阶段
@@ -968,7 +991,7 @@
     <span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
           class="glyphicon glyphicon-remove mystage"
           data-toggle="popover" data-placement="bottom"
-          data-content="<%=dv.getText()%>" style="color: #000000;"></span>
+          data-content="<%=dv.getText()%>" style="color: #FFFFFF;"></span>
     ----------
 
 
@@ -986,9 +1009,8 @@
     <span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
           class="glyphicon glyphicon-record mystage"
           data-toggle="popover" data-placement="bottom"
-          data-content="<%=dv.getText()%>" style="color: #000000;"></span>
+          data-content="<%=dv.getText()%>" style="color: #FFFFFF;"></span>
     ----------
-
 
     <%
 
@@ -1025,7 +1047,7 @@
     <span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
           class="glyphicon glyphicon-remove mystage"
           data-toggle="popover" data-placement="bottom"
-          data-content="<%=dv.getText()%>" style="color: #000000;"></span>
+          data-content="<%=dv.getText()%>" style="color: #FFFFFF;"></span>
     ----------
 
 
@@ -1063,7 +1085,7 @@
     <span id="<%=i%>" onclick="changeStage('<%=listStage%>','<%=i%>')"
           class="glyphicon glyphicon-record mystage"
           data-toggle="popover" data-placement="bottom"
-          data-content="<%=dv.getText()%>" style="color: #000000;"></span>
+          data-content="<%=dv.getText()%>" style="color: #FFFFFF;"></span>
     ----------
 
 
@@ -1082,69 +1104,68 @@
 </div>
 
 <!-- 详细信息 -->
-<div style="position: relative; top: 0px;">
+<div style="color: aquamarine;position: relative; top: 0px;">
     <div style="position: relative; left: 40px; height: 30px;">
-        <div style="width: 300px; color: gray;">所有者</div>
+        <div style="width: 300px; color: aqua;">所有者</div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">金额</div>
+        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">金额</div>
         <div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${t.owner}</b></div>
         <div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${t.money}</b></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 10px;">
-        <div style="width: 300px; color: gray;">名称</div>
+        <div style="width: 300px; color: aqua;">名称</div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">预计成交日期</div>
+        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">预计成交日期</div>
         <div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${t.name}</b></div>
         <div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${t.expectedDate}</b></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 20px;">
-        <div style="width: 300px; color: gray;">客户名称</div>
+        <div style="width: 300px; color: aqua;">客户名称</div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">阶段</div>
+        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">阶段</div>
         <div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${t.customerName}</b></div>
         <div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b id="stage">${t.stage}</b></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 30px;">
-        <div style="width: 300px; color: gray;">类型</div>
+        <div style="width: 300px; color: aqua;">类型</div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">可能性</div>
+        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">可能性</div>
         <div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${t.type}</b></div>
         <div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b id="possibility">${t.possibility}</b>
         </div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 40px;">
-        <div style="width: 300px; color: gray;">来源</div>
+        <div style="width: 300px; color: aqua;">来源</div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; bottom: -1px;"></div>
         <div style="height: 1px; width: 400px; background: #D5D5D5; position: relative; left: 450px"></div>
-        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: gray;">市场活动源</div>
+        <div style="width: 300px;position: relative; left: 450px; top: -20px; color: aqua;">市场活动源</div>
         <div style="width: 300px;position: relative; left: 200px; top: -40px;"><b>${t.source}&nbsp;&nbsp;</b></div>
         <div style="width: 300px;position: absolute; left: 650px; top: 0px;"><b>${t.activityName}&nbsp;&nbsp;</b></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 50px;">
-        <div style="width: 300px; color: gray;">联系人名称</div>
+        <div style="width: 300px; color: aqua;">联系人名称</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${t.contactsName}</b></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 60px;">
-        <div style="width: 300px; color: gray;">创建者</div>
+        <div style="width: 300px; color: aqua;">创建者</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>${t.createBy}&nbsp;&nbsp;</b><small
-                style="font-size: 10px; color: gray;">${t.createTime}</small></div>
+                style="font-size: 10px; color: aquamarine;">${t.createTime}</small></div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 70px;">
-        <div style="width: 300px; color: gray;">修改者</div>
+        <div style="width: 300px; color: aqua;">修改者</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b
-                id="editBy">${t.editBy}&nbsp;&nbsp;</b><small id="editTime"
-                                                              style="font-size: 10px; color: gray;">${t.editTime}</small>
+                id="editBy">${t.editBy}&nbsp;&nbsp;</b><small id="editTime" style="font-size: 10px; color: aquamarine;">${t.editTime}</small>
         </div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 80px;">
-        <div style="width: 300px; color: gray;">描述</div>
+        <div style="width: 300px; color: aqua;">描述</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 630px;position: relative; left: 200px; top: -20px;">
             <b>
@@ -1153,7 +1174,7 @@
         </div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 90px;">
-        <div style="width: 300px; color: gray;">联系纪要</div>
+        <div style="width: 300px; color: aqua;">联系纪要</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 630px;position: relative; left: 200px; top: -20px;">
             <b>
@@ -1162,21 +1183,21 @@
         </div>
     </div>
     <div style="position: relative; left: 40px; height: 30px; top: 100px;">
-        <div style="width: 300px; color: gray;">下次联系时间</div>
+        <div style="width: 300px; color: aqua;">下次联系时间</div>
         <div style="height: 1px; width: 550px; background: #D5D5D5; position: relative; bottom: 1px;"></div>
         <div style="width: 500px;position: relative; left: 200px; top: -20px;"><b>&nbsp;${t.nextContactTime}</b></div>
     </div>
 </div>
 
 <!-- 备注 -->
-<div id="remarkBody" style="position: relative; top: 100px; left: 40px;">
+<div id="remarkBody" style="color: aqua;position: relative; top: 100px; left: 40px;">
     <div class="page-header">
         <h4>备注</h4>
     </div>
 
-    <div id="remarkDiv" style="background-color: #E6E6E6; width: 870px; height: 90px;">
+    <div id="remarkDiv" style="background-color: #5e5e5e; width: 870px; height: 90px;">
         <form role="form" style="position: relative;top: 10px; left: 10px;">
-            <textarea id="remark" class="form-control" style="width: 850px; resize : none;" rows="2"
+            <textarea id="remark" class="form-control" style="background-color: #9d9d9d;color: #c8e5bc;width: 850px; resize : none;" rows="2"
                       placeholder="添加备注..."></textarea>
             <p id="cancelAndSaveBtn" style="position: relative;left: 737px; top: 10px; display: none;">
                 <button id="cancelBtn" type="button" class="btn btn-default">取消</button>
@@ -1189,12 +1210,12 @@
 
 <!-- 阶段历史 -->
 <div>
-    <div style="position: relative; top: 100px; left: 40px;">
+    <div style="color: aqua;position: relative; top: 100px; left: 40px;">
         <div class="page-header">
             <h4>阶段历史</h4>
         </div>
         <div style="position: relative;top: 0px;">
-            <table id="activityTable" class="table table-hover" style="width: 900px;">
+            <table id="activityTable" class="table " style="width: 900px;">
                 <thead>
                 <tr style="color: #B3B3B3;">
                     <td>阶段</td>

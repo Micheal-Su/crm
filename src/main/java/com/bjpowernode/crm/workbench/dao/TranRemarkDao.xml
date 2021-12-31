@@ -13,6 +13,12 @@
         </foreach>
     </select>
 
+    <select id="getCountByTid" resultType="int">
+        select count(*)
+        from tbl_tran_remark
+        where tranId=#{id}
+    </select>
+
 
     <delete id="deleteByTids">
         delete
@@ -23,6 +29,11 @@
         </foreach>
     </delete>
 
+    <delete id="deleteByTid">
+        delete
+        from tbl_tran_remark
+        where tranId=#{id}
+    </delete>
 
     <select id="getListByTranId" resultType="TranRemark">
         select *

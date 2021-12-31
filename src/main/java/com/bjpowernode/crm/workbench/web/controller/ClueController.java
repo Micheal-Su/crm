@@ -60,6 +60,8 @@ public class ClueController extends HttpServlet {
             update(request,response);
         }else if ("/workbench/clue/delete.do".equals(path)){
             delete(request,response);
+        }else if ("/workbench/clue/deleteInDetail.do".equals(path)){
+            deleteInDetail(request,response);
         }else if ("/workbench/clue/saveRemark.do".equals(path)){
             saveRemark(request,response);
         }else if ("/workbench/clue/deleteRemark.do".equals(path)){
@@ -72,11 +74,20 @@ public class ClueController extends HttpServlet {
             getCustomerName(request,response);
         }
     }
+
+    private void deleteInDetail(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("进入到删除线索信息的操作");
+        String id = request.getParameter("clueId");
+        ClueService cs = (ClueService) ServiceFactory.getService(new ClueServiceImpl());
+        boolean flag = cs.deleteInDetail(id);
+        PrintJson.printJsonFlag(response,flag);
+    }
+
     private void getCustomerName(HttpServletRequest request, HttpServletResponse response) {
         System.out.println("取得 客户名称列表（按照客户名进行模糊查询）");
         String name = request.getParameter("name");
-        CustomerService ts = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
-        List<Customer> cList = ts.getCustomerName(name);
+        CustomerService cs = (CustomerService) ServiceFactory.getService(new CustomerServiceImpl());
+        List<Customer> cList = cs.getCustomerName(name);
         PrintJson.printJsonObj(response, cList);
     }
 

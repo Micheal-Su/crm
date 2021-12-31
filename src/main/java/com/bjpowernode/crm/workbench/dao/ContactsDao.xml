@@ -14,6 +14,12 @@
         </foreach>
     </select>
 
+    <select id="getNumByCusId" resultType="int">
+        select count(*)
+        from tbl_contacts
+        where customerId=#{id}
+    </select>
+
     <delete id="deletesByCusId">
         delete from tbl_contacts
         where customerId in
@@ -47,6 +53,18 @@
 
     <select id="getContactsByName" resultType="Contacts">
         select * from tbl_contacts where fullname = #{fullname}
+    </select>
+
+    <select id="getContactsByNameAndId" resultType="Contacts">
+        select * from tbl_contacts
+        where fullname = #{fullname}
+        and id = #{id}
+    </select>
+
+    <select id="getContactsNumByName" resultType="int">
+        select count(*)
+        from tbl_contacts
+        where fullname = #{fullname}
     </select>
 
     <select id="getContactsListByCid" resultType="Contacts">

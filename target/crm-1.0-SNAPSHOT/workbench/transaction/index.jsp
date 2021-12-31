@@ -54,7 +54,7 @@
                 }else if ($xz.length==1){
                     var id = $xz.val();
                     window.location.href="workbench/transaction/edit2.do?id="+id;
-                //    取得tran的detail
+                    //    取得tran的detail
 
                 }
             })
@@ -131,14 +131,14 @@
                     var html = "";
                     $.each(data.dataList, function (i,n) {
                         html += '<tr class="active">';
-                        html += '<td><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
-                        html += '<td><a style="text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id=' + n.id + '\';">' + n.name + '</a></td>';
-                        html += '<td>' + n.owner + '</td>';
-                        html += '<td>' + n.customerName + '</td>';
-                        html += '<td>' + n.stage + '</td>';
-                        html += '<td>' + n.type + '</td>';
-                        html += '<td>' + n.source + '</td>';
-                        html += '<td>' + n.contactsName + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke"><input type="checkbox" name="xz" value="' + n.id + '"/></td>';
+                        html += '<td style="background-color: #5e5e5e;"><a style="color: aquamarine;text-decoration: none; cursor: pointer;" onclick="window.location.href=\'workbench/transaction/detail.do?id=' + n.id + '\';">' + n.name + '</a></td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.owner + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.customerName + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.stage + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.type + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.source + '</td>';
+                        html += '<td style="background-color: #5e5e5e;color: whitesmoke">' + n.contactsName + '</td>';
                         html += '</tr>';
 
                     })
@@ -173,8 +173,14 @@
         }
 
     </script>
+    <style>
+        .form-control{
+            background-color: #5e5e5e;
+            color: #e8ff2f;
+        }
+    </style>
 </head>
-<body>
+<body style="background-color: #222222;">
 <input type="hidden" id="hidden-owner"/>
 <input type="hidden" id="hidden-name"/>
 <input type="hidden" id="hidden-customerName"/>
@@ -184,7 +190,7 @@
 <input type="hidden" id="hidden-contactsName"/>
 <div>
     <div style="position: relative; left: 10px; top: -10px;">
-        <div class="page-header">
+        <div style="color: whitesmoke" class="page-header">
             <h3>交易列表</h3>
         </div>
     </div>
@@ -199,22 +205,22 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">所有者</div>
-                        <input class="form-control" type="text" id="search-owner">
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">所有者</div>
+                        <input style="color: whitesmoke;background-color: #222222" class="form-control" type="text" id="search-owner">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">名称</div>
-                        <input class="form-control" type="text" id="search-name">
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">名称</div>
+                        <input style="color: whitesmoke;background-color: #222222" class="form-control" type="text" id="search-name">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">客户名称</div>
-                        <input class="form-control" type="text" id="search-customerName">
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">客户名称</div>
+                        <input style="color: whitesmoke;background-color: #222222" class="form-control" type="text" id="search-customerName">
                     </div>
                 </div>
 
@@ -222,11 +228,11 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">阶段</div>
-                        <select class="form-control" id="search-stage">
-                            <option></option>
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">阶段</div>
+                        <select style="color: whitesmoke;background-color: #222222" class="form-control" id="search-stage">
+                            <option style="color: whitesmoke;background-color: #222222"></option>
                             <c:forEach items="${stageList}" var="s">
-                                <option value="${s.value}">${s.text}</option>
+                                <option style="color: whitesmoke;background-color: #222222" value="${s.value}">${s.text}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -234,9 +240,9 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">类型</div>
-                        <select class="form-control" id="search-type">
-                            <option></option>
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">类型</div>
+                        <select style="color: whitesmoke;background-color: #222222" class="form-control" id="search-type">
+                            <option style="color: whitesmoke;background-color: #222222"></option>
                             <option>已有业务</option>
                             <option>新业务</option>
                         </select>
@@ -245,11 +251,11 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">来源</div>
-                        <select class="form-control" id="search-source">
-                            <option></option>
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">来源</div>
+                        <select style="color: whitesmoke;background-color: #222222" class="form-control" id="search-source">
+                            <option style="color: whitesmoke;background-color: #222222"></option>
                             <c:forEach items="${sourceList}" var="s">
-                                <option value="${s.value}">${s.text}</option>
+                                <option style="color: whitesmoke;background-color: #222222" value="${s.value}">${s.text}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -257,26 +263,27 @@
 
                 <div class="form-group">
                     <div class="input-group">
-                        <div class="input-group-addon">联系人名称</div>
-                        <input class="form-control" type="text" id="search-contactsName">
+                        <div style="color: whitesmoke;background-color: #222222" class="input-group-addon">联系人名称</div>
+                        <input style="color: whitesmoke;background-color: #222222" class="form-control" type="text" id="search-contactsName">
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-default" id="searchBtn">查询</button>
+                <button style="color: whitesmoke;background-color: #222222" type="button" class="btn btn-default" id="searchBtn">查询</button>
 
             </form>
         </div>
         <div class="btn-toolbar" role="toolbar"
-             style="background-color: #F7F7F7; height: 50px; position: relative;top: 10px;">
+             style="background-color: #222222; height: 50px; position: relative;top: 10px;">
             <div class="btn-group" style="position: relative; top: 18%;">
-                <button type="button" class="btn btn-primary"
-                        onclick="window.location.href='workbench/transaction/add.do';"><span
-                        class="glyphicon glyphicon-plus"></span> 创建
+                <button style="color: aqua;background-color: #222222" type="button" class="btn btn-primary"
+                        onclick="window.location.href='workbench/transaction/add.do';">
+                    <span style="color: aqua;"class="glyphicon glyphicon-plus"></span> 创建
                 </button>
-                <button type="button" class="btn btn-default" id="editBtn"><span
-                        class="glyphicon glyphicon-pencil"></span> 修改
+                <button style="color: whitesmoke;background-color: #222222" type="button" class="btn btn-default" id="editBtn">
+                    <span style="color: whitesmoke" class="glyphicon glyphicon-pencil"></span> 修改
                 </button>
-                <button type="button" class="btn btn-danger" id="deleteBtn"><span class="glyphicon glyphicon-minus"></span> 删除</button>
+                <button style="color: #ff0966;background-color: #222222" type="button" class="btn btn-danger" id="deleteBtn">
+                    <span style="color:#ff0966" class="glyphicon glyphicon-minus"></span> 删除</button>
             </div>
         </div>
         <div style="position: relative;top: 25px;">
@@ -300,7 +307,7 @@
         </div>
 
         <div style="height: 50px; position: relative;top: 30px;">
-            <div id="tranPage"></div>
+            <div id="tranPage" style="background-color: #222222;color: whitesmoke"></div>
 
         </div>
 

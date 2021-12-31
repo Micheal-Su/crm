@@ -38,5 +38,7 @@ public interface CustomerService {
 
     List<Tran> getTranListByCustomerId(String customerId);
 
+    boolean deleteInDetail(String id);
+
 //    boolean addContacts(String customerId, String contactsId);
 }

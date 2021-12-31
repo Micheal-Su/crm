@@ -18,4 +18,8 @@ public interface CustomerRemarkDao {
     int deleteRemark(String id);
 
     int updateRemark(CustomerRemark cr);
+
+    int getCountByCid(String id);
+
+    int deleteByCid(String id);
 }
