@@ -39,11 +39,11 @@ public class UserServiceImpl implements UserService {
         if("0".equals(lockState)){
             throw new LoginException("账号已锁定");
         }
-        //判断ip地址
-//        String allowIps = user.getAllowIps();
-//        if (!allowIps.contains(ip)){
-//            throw new LoginException("ip地址受限");
-//        }
+//        判断ip地址
+        String allowIps = user.getAllowIps();
+        if (!allowIps.contains(ip)){
+            throw new LoginException("ip地址受限");
+        }
 
         return user;
     }

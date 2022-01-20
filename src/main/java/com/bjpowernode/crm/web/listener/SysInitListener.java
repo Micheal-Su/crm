@@ -58,11 +58,6 @@ public class SysInitListener implements ServletContextListener {
             application.setAttribute(key,map.get(key));
 
         }
-        UserService us = (UserService)ServiceFactory.getService(new UserServiceImpl());
-        List<User> userList = us.getUserList();
-        for (User user : userList){
-            application.setAttribute(user.getDeptno(), user);
-        }
 
         System.out.println("服务器缓存处理数据字典结束");
 

@@ -145,7 +145,7 @@
 
 <!-- 顶部 -->
 <div id="top" style="height: 50px; background-color: #3C3C3C; width: 100%;">
-	<div style="position: absolute; top: 5px; left: 0px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'">CRM &nbsp;<span style="font-size: 12px;">2021 黄达豪-黄宏基-苏俊彬-姚燕龄</span></div>
+	<div style="position: absolute; top: 5px; left: 0px; font-size: 30px; font-weight: 400; color: white; font-family: 'times new roman'">CRM &nbsp;<span style="font-size: 12px;">2021 苏俊彬</span></div>
 	<div style="position: absolute; top: 15px; right: 30px;">
 		<ul >
 			<li class="dropdown user-dropdown">
@@ -191,9 +191,9 @@
 			</li>
 			<li style="font-size: 20px;" class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-file"></span> 报表</a></li>
 			<li style="font-size: 20px;" class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-shopping-cart"></span> 销售订单</a></li>
-			<li style="font-size: 20px;" class="liClass"><a href="workbench/dispatchBill/index.jsp;" target="workareaFrame"><span class="glyphicon glyphicon-send"></span> 发货单</a></li>
-			<li style="font-size: 20px;" class="liClass"><a href="workbench/follow/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 跟进</a></li>
-			<li style="font-size: 20px;" class="liClass"><a href="workbench/product/index.jsp" target="workareaFrame"><span class="glyphicon glyphicon-leaf"></span> 产品</a></li>
+			<li style="font-size: 20px;" class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-send"></span> 发货单</a></li>
+			<li style="font-size: 20px;" class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-earphone"></span> 跟进</a></li>
+			<li style="font-size: 20px;" class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-leaf"></span> 产品</a></li>
 			<li style="font-size: 20px;" class="liClass"><a href="javascript:void(0);" target="workareaFrame"><span class="glyphicon glyphicon-usd"></span> 报价</a></li>
 		</ul>
 

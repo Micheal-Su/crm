@@ -18,9 +18,7 @@ public class LoginFilter implements Filter {
 
         String path = request.getServletPath();
         //不拦截的资源,自动放行
-        if ("/login.jsp".equals(path) || "/settings/user/login.do".equals(path) ||
-                "/settings/user/detail.do".equals(path)||
-                "/productor.jsp".equals(path) ) {
+        if ("/login.jsp".equals(path) || "/settings/user/login.do".equals(path)) {
 
             chain.doFilter(req,resp);
 
