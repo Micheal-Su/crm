@@ -275,53 +275,5 @@
 
 </div>
 
-
-<div style="color: #a6e1ec" class="modal fade" id="myInformation" role="dialog">
-    <div class="modal-dialog" role="document" style="width: 30%;">
-        <div style="background-color: #333333" class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title">开发者信息</h4>
-            </div>
-            <div class="modal-body">
-                <div style="position: relative; left: 40px;">
-                    姓名：<b>${A001.name}</b><br><br>
-                    登录帐号：<b>${A001.loginAct}</b><br><br>
-                    部门编号：<b>${A001.deptno}</b><br><br>
-                    邮箱：<b>${A001.email}</b><br><br>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button style="background-color: #333333;color: #a6e1ec" type="button" class="btn btn-default"
-                        data-dismiss="modal">关闭
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div style="color: #a6e1ec" class="modal fade" id="video" role="dialog">
-    <div class="modal-dialog" role="document" style="width: 70%;">
-        <div style="background-size: 100%;background-image:url('./image/guanggaoback.jpg')" class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true">×</span>
-                </button>
-                <h4 class="modal-title">I don't wanna see you anymore</h4>
-            </div>
-            <div class="modal-body">
-                <div style="position: relative; left: 40px;">
-                    <video controls="controls">
-                        <source src="image/guanggao.mp4" type="video/mp4">
-                    </video>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 </body>
 </html>
